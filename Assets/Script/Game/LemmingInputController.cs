@@ -1,17 +1,39 @@
 ﻿using UnityEngine;
-using System.Collections;
 using ConditionalAttribute = System.Diagnostics.ConditionalAttribute;
-using System;
+using System.Collections.Generic;
+
+public class LemmingTouch {
+	private Vector2 beganPosition;
+	private Collider2D touchedTrigger;
+	public LemmingTouch(Vector2 startPosition) {
+		this.beganPosition = startPosition;
+	}
+
+	public Collider2D TouchedTrigger{
+		get
+		{
+			return touchedTrigger;
+		}
+		set
+		{
+			touchedTrigger = value;
+		}
+	}
+	
+	public Vector2 BeganPosition {
+		get
+		{
+			return beganPosition;
+		}
+	}
+}
 
 public class LemmingInputController : MonoBehaviour
 {
-	public delegate void InputEventHandler (Vector2 dragDir);
-
-	private event InputEventHandler inputEventHandler;
-
+	private Dictionary<int, LemmingTouch> touchCollection = new Dictionary<int, LemmingTouch>();
 	void Start ()
 	{
-	
+		
 	}
 
 	void Update ()
@@ -22,32 +44,59 @@ public class LemmingInputController : MonoBehaviour
 
 	private void CheckTouchInput ()
 	{
+		if (GameController.Instance.CurrentGameState != GameController.GameState.Start)
+			return;
+
 		var touchCount = Input.touchCount;
 		if (Input.touchCount == 0)
 			return;
 
 		for (var i = 0; i < touchCount; i++) {
 			var touch = Input.GetTouch (i);
-			inputEventHandler (touch.deltaPosition.normalized);
+			if (touch.phase == TouchPhase.Began)
+				TouchBegan(touch.fingerId, touch.position);
+			if (touch.phase == TouchPhase.Ended)
+				TouchEnded(touch.fingerId, touch.position);
+			if (touch.phase == TouchPhase.Moved)
+				TouchMoved(touch.fingerId, touch.position);
+		}
+	}
+	
+	private void TouchBegan(int fingerID, Vector2 position) {
+		if (touchCollection.ContainsKey(fingerID))
+			touchCollection.Remove(fingerID);
+
+		touchCollection.Add(fingerID, new LemmingTouch(position));
+	}
+	
+	private void TouchEnded(int fingerID, Vector2 endedPosition) {
+		Check (touchCollection[fingerID].BeganPosition, endedPosition, touchCollection[fingerID].TouchedTrigger);
+		touchCollection.Remove(fingerID);
+	}
+
+	private void TouchMoved(int fingerID, Vector2 position) {
+		Vector3 pos = Camera.main.ScreenToWorldPoint (position);
+		RaycastHit2D hit = Physics2D.Raycast (pos, Vector2.zero);
+
+		if (hit.collider.gameObject.name.Contains("TouchTrigger")) {
+			touchCollection[fingerID].TouchedTrigger = hit.collider;
 		}
 	}
 
-	private Vector2? previousMousePosition = null;
+	private void Check (Vector2 beganPosition, Vector2 endPosition, Collider2D trigger)
+	{
+		
+	}
+
 	[Conditional ("UNITY_EDITOR")]
 	private void CheckMouseInput ()
 	{
-		const int LEFT_BUTTON_OF_MOUSE = 0;
-		if (Input.GetMouseButton (LEFT_BUTTON_OF_MOUSE)){
-			if (previousMousePosition.HasValue) {
-				var deltaMousePosition = previousMousePosition.Value - new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-				inputEventHandler (deltaMousePosition.normalized);
-			}
-			previousMousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-		}
-	}
+		if (GameController.Instance.CurrentGameState != GameController.GameState.Start)
+			return;
 
-	public void RegisterInputEventHandler (InputEventHandler callback)
-	{
-		inputEventHandler += callback;
+		const int LEFT_BUTTON_OF_MOUSE = 0;
+		if (Input.GetMouseButton (LEFT_BUTTON_OF_MOUSE)) {
+
+		}
 	}
 }

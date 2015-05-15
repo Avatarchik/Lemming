@@ -9,7 +9,7 @@ public class BackToCenterState : IState
 	public BackToCenterState (Lemming lemming)
 	{
 		this.lemming = lemming;
-		centerPosition = lemming.CenterPosition;
+		centerPosition = GameController.Instance.GetCenterPosition();
 	}
 
 	private bool IsReached ()
@@ -33,7 +33,7 @@ public class BackToCenterState : IState
 
 	private void MoveToCenter ()
 	{
-		float step = lemming.defaultSpeed * Time.deltaTime;
+		float step = lemming.speed * Time.deltaTime;
 		lemming.transform.position = Vector3.MoveTowards (lemming.transform.position, centerPosition, step);
 	}
 

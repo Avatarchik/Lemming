@@ -4,12 +4,11 @@ using System.Collections.Generic;
 
 public class Lemming : MonoBehaviour
 {
-	public float defaultSpeed;
 	public float speed;
-	public float power;
-	private List<Vector2> availableCliffPositionList = new List<Vector2> ();
-	private Vector2 centerPosition;
+	public float defaultSpeed;
 	private IState currentState;
+	private Vector2? currentTargetPosition;
+	private Queue<Vector2> targetPositionQueue = new Queue<Vector2> ();
 
 	public enum Action
 	{
@@ -26,6 +25,7 @@ public class Lemming : MonoBehaviour
 		None,
 		Idle,
 		MoveToCliff,
+		FindAvailableCliff,
 		BackToCenter,
 		JumpToCliff,
 		Die
@@ -33,10 +33,8 @@ public class Lemming : MonoBehaviour
 
 	void Awake ()
 	{
-		// FIXME: read speed and power information from table.
-		defaultSpeed = 2.5f;
 		speed = 3f;
-		power = 1.5f;
+		defaultSpeed = 3f;
 	}
 
 	void Update ()
@@ -63,7 +61,13 @@ public class Lemming : MonoBehaviour
 			currentState = new IdleState (this);
 			break;
 		case Action.MoveToCliff:
-			currentState = new MoveToCliffState (this);
+			if (targetPositionQueue.Count == 0) {
+				currentTargetPosition = null;
+				currentState = new FindAvailableCliffState (this);
+			} else {
+				currentTargetPosition = targetPositionQueue.Dequeue ();
+				currentState = new MoveToCliffState (this, currentTargetPosition.Value);
+			}
 			break;
 		case Action.BackToCenter:
 			currentState = new BackToCenterState (this);
@@ -84,6 +88,8 @@ public class Lemming : MonoBehaviour
 			return State.MoveToCliff;
 		else if (currentState is BackToCenterState)
 			return State.BackToCenter;
+		else if (currentState is FindAvailableCliffState)
+			return State.FindAvailableCliff;
 		else if (currentState is JumpToCliffState)
 			return State.JumpToCliff;
 		else if (currentState is DieState)
@@ -92,26 +98,19 @@ public class Lemming : MonoBehaviour
 			return State.None;
 	}
 
-	public List<Vector2> AvailableCliffPositionList {
-		get {
-			return availableCliffPositionList;
-		}
-		set {
-			availableCliffPositionList = new List<Vector2> (value);
-		}
-	}
-
-	public Vector2 CenterPosition {
-		get {
-			return centerPosition;
-		}
-		set {
-			centerPosition = value;
-		}
-	}
-
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		ChangeAction (Action.JumpToCliff);
+		if (other.gameObject.name.Contains("CliffTrigger"))
+			ChangeAction (Action.JumpToCliff);
+	}
+
+	public void EnqueueTargetPosition (Vector2 targetPosition)
+	{
+		targetPositionQueue.Enqueue (targetPosition);
+	}
+
+	public void ResetTargetPositionQueue ()
+	{
+		targetPositionQueue.Clear ();
 	}
 }

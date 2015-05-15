@@ -6,21 +6,20 @@ public class MoveToCliffState : IState
 {
 	private Vector2 targetPosition;
 	private Lemming lemming;
-	private float randomSpeed;
 
-	public MoveToCliffState (Lemming lemming)
+	public MoveToCliffState (Lemming lemming, Vector2 targetPosition)
 	{
 		this.lemming = lemming;
-		SetRandomSpeed (lemming.speed);
-		targetPosition = GetRandomTargetPosition (lemming.AvailableCliffPositionList);
+		this.targetPosition = targetPosition;
+		SetRandomSpeed (ref lemming);
 	}
 
-	private void SetRandomSpeed (float speed)
+	private void SetRandomSpeed (ref Lemming lemming)
 	{
-		const float RANDOM_PERCENTAGE_LIMIT = 30;
-		var maximumSpeed = speed * (1 + RANDOM_PERCENTAGE_LIMIT / 100);
-		var minimumSpeed = speed * (1 - RANDOM_PERCENTAGE_LIMIT / 100);
-		this.randomSpeed = Random.Range (minimumSpeed, maximumSpeed);
+		const float RANDOM_PERCENTAGE_LIMIT = 20;
+		var maximumSpeed = lemming.defaultSpeed * (1 + RANDOM_PERCENTAGE_LIMIT / 100);
+		var minimumSpeed = lemming.defaultSpeed * (1 - RANDOM_PERCENTAGE_LIMIT / 100);
+		lemming.speed = Random.Range (minimumSpeed, maximumSpeed);
 	}
 
 	public void Update ()
@@ -38,17 +37,12 @@ public class MoveToCliffState : IState
 
 	private bool IsValidTargetPosition ()
 	{
-		return lemming.AvailableCliffPositionList.Contains (targetPosition);
+		return GameController.Instance.GetAvailableCliffPosition().Contains (targetPosition);
 	}
 
 	private void MoveToTargetCliff ()
 	{
-		float step = randomSpeed * Time.deltaTime;
+		float step = lemming.speed * Time.deltaTime;
 		lemming.transform.position = Vector3.MoveTowards (lemming.transform.position, targetPosition, step);
-	}
-
-	private Vector2 GetRandomTargetPosition (List<Vector2> positionList)
-	{
-		return positionList.Skip (Random.Range (0, positionList.Count)).Take (1).FirstOrDefault ();
 	}
 }
