@@ -2,18 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class Map
+public interface Map
 {
-	protected List<Vector2> cliffPosition;
-	protected Vector2 centerPosition;
+	Vector2 GetCenterPosition ();
 
-	public Vector2 GetCenterPosition ()
-	{
-		return centerPosition;
-	}
-
-	public List<Vector2> GetCliffPosition ()
-	{
-		return cliffPosition;
-	}
+	List<Vector2> GetCliffPosition ();
+	void TouchInputTrigger(GameObject trigger);
 }
