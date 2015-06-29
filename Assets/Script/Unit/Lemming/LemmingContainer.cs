@@ -33,6 +33,7 @@ public class LemmingContainer
             lemmingObjects[i] = GameObject.Instantiate(Resources.Load(LemmingResourcePath) as GameObject);
             lemmingObjects[i].name = "Lemming" + i;
             lemmingObjects[i].transform.position = spawnPosition[i];
+            lemmingObjects[i].transform.parent = Camera.main.transform;
             lemmingObjects[i].GetComponent<SpriteRenderer>().sortingOrder = i;
         }
     }
