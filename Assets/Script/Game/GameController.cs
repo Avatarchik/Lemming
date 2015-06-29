@@ -17,8 +17,9 @@ public class GameController : MonoBehaviour
     private GameObject optionPanel;
     [SerializeField]
     private GameTimer timer;
-    private Map map;
+    [SerializeField]
     private GameObject mapObject;
+    private Map map;
     private GameState currentGameState;
     private LemmingContainer lemmingContainer;
 
@@ -198,8 +199,13 @@ public class GameController : MonoBehaviour
 
     private void Initialize()
     {
-        InitializeMapData();
+        InitializeMap();
         InitializeLemmings();
+    }
+
+    private void InitializeMap()
+    {
+        map = mapObject.GetComponent<Map>();
     }
 
     private void InitializeLemmings()
@@ -207,15 +213,6 @@ public class GameController : MonoBehaviour
         lemmingContainer = new LemmingContainer();
         lemmingContainer.SpawnLemmings();
         lemmingContainer.ResetLemmingState();
-    }
-
-    private void InitializeMapData()
-    {
-        const string PATH_OF_MAP = "Map/HexagonMap/HexagonMap";
-        // FIXME: Get Map information form global instance.
-        mapObject = GameObject.Instantiate(Resources.Load(PATH_OF_MAP) as GameObject);
-        mapObject.transform.parent = Camera.main.transform;
-        map = mapObject.GetComponent<HexagonMap>();
     }
 
     public List<Vector2> GetAvailableCliffPosition()
