@@ -8,6 +8,8 @@ using System;
 public class GameController : MonoBehaviour
 {
     [SerializeField]
+    private GameObject mainHud;
+    [SerializeField]
     private GameObject restartButton;
     [SerializeField]
     private GameObject readyCounter;
@@ -57,7 +59,7 @@ public class GameController : MonoBehaviour
     [UnityEventListener]
     private void StartGame()
     {
-        timer.gameObject.SetActive(true);
+        ShowMainHud();
         timer.ResetTime();
         StartCoroutine(ShowReadyCounter(StartCounterCallback));
     }
@@ -119,6 +121,11 @@ public class GameController : MonoBehaviour
         timer.StartTimer();
         StartCoroutine("CheckingLemmingState");
         StartCoroutine("IncreaseGameLevel");
+    }
+
+    private void ShowMainHud()
+    {
+        mainHud.SetActive(true);
     }
 
     private IEnumerator CheckingLemmingState()
