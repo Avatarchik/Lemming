@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject readyCounter;
     [SerializeField]
+    private LemmingOption option;
+    [SerializeField]
     private GameTimer timer;
     private Map map;
     private GameObject mapObject;
@@ -111,6 +113,7 @@ public class GameController : MonoBehaviour
         lemmingContainer.ResetLemmingPosition();
         lemmingContainer.ResetLemmingState();
         lemmingContainer.ResetTargetPositionQueue();
+        lemmingContainer.ResetLemmingSpeed();
         StartGame();
     }
 
@@ -124,7 +127,15 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
+        if (currentGameState == GameState.Start)
+            CheckTimeToIncreaseLemmingSpeed();
+    }
 
+    private void CheckTimeToIncreaseLemmingSpeed()
+    {
+        const float IncreasingSpeedTickTime = 10f;
+        if (timer.CurrentTime != 0f && timer.CurrentTime % IncreasingSpeedTickTime == 0f)
+            lemmingContainer.IncreaseLemmingSpeed(1f);
     }
 
     private void Initialize()
