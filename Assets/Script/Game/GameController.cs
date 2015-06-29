@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class GameController : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject readyCounter;
     [SerializeField]
-    private LemmingOption option;
+    private GameObject optionPanel;
     [SerializeField]
     private GameTimer timer;
     private Map map;
@@ -23,7 +24,8 @@ public class GameController : MonoBehaviour
     {
         Ready,
         Start,
-        GameOver
+        GameOver,
+        Pause
     }
 
     public static GameController Instance
@@ -57,10 +59,46 @@ public class GameController : MonoBehaviour
     {
         timer.gameObject.SetActive(true);
         timer.ResetTime();
-        StartCoroutine("ShowReadyCounter");
+        StartCoroutine(ShowReadyCounter(StartCounterCallback));
     }
 
-    private IEnumerator ShowReadyCounter()
+    [UnityEventListener]
+    private void OpenOptionPanel()
+    {
+        PauseGame();
+        ShowOptionPanel();
+    }
+
+    [UnityEventListener]
+    private void CloseOptionMenu()
+    {
+        ContinueGame();
+        HideOptionPanel();
+    }
+
+    private void PauseGame()
+    {
+        currentGameState = GameState.Pause;
+        Time.timeScale = 0;
+    }
+
+    private void ContinueGame()
+    {
+        currentGameState = GameState.Start;
+        Time.timeScale = 1;
+    }
+
+    private void ShowOptionPanel()
+    {
+        optionPanel.SetActive(true);
+    }
+
+    private void HideOptionPanel()
+    {
+        optionPanel.SetActive(false);
+    }
+
+    private IEnumerator ShowReadyCounter(Action counterCallback = null)
     {
         readyCounter.SetActive(true);
         readyCounter.GetComponentInChildren<Text>().text = "3";
@@ -70,9 +108,17 @@ public class GameController : MonoBehaviour
         readyCounter.GetComponentInChildren<Text>().text = "1";
         yield return new WaitForSeconds(1f);
         readyCounter.SetActive(false);
+
+        if (counterCallback != null)
+            counterCallback();
+    }
+
+    private void StartCounterCallback()
+    {
         currentGameState = GameState.Start;
         timer.StartTimer();
         StartCoroutine("CheckingLemmingState");
+        StartCoroutine("IncreaseGameLevel");
     }
 
     private IEnumerator CheckingLemmingState()
@@ -121,6 +167,7 @@ public class GameController : MonoBehaviour
     {
         lemmingContainer.ChangeToGameOverState();
         currentGameState = GameState.GameOver;
+        StopCoroutine("IncreaseGameLevel");
         StopCoroutine("CheckingLemmingState");
         restartButton.SetActive(true);
         timer.StopTimer();
@@ -128,15 +175,18 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (currentGameState == GameState.Start)
-            CheckTimeToIncreaseLemmingSpeed();
     }
 
-    private void CheckTimeToIncreaseLemmingSpeed()
+    private IEnumerator IncreaseGameLevel()
     {
-        const float IncreasingSpeedTickTime = 10f;
-        if (timer.CurrentTime != 0f && timer.CurrentTime % IncreasingSpeedTickTime == 0f)
-            lemmingContainer.IncreaseLemmingSpeed(1f);
+        const float fixedTickTime = 10f;
+        const float increasingSpeedValue = 0.5f;
+
+        while(true)
+        {
+            yield return new WaitForSeconds(fixedTickTime);
+            lemmingContainer.IncreaseLemmingSpeed(increasingSpeedValue);
+        }
     }
 
     private void Initialize()
