@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class LemmingContainer
 {
@@ -54,6 +55,11 @@ public class LemmingContainer
     {
         for (var i = 0; i < lemmingObjects.Length; i++)
             lemmingObjects[i].GetComponent<Lemming>().ChangeAction(Lemming.Action.Idle);
+    }
+    
+    public void ChangeToGameOverState()
+    {
+        lemmingObjects.ToList().ForEach(lemmging => lemmging.GetComponent<Lemming>().ChangeAction(Lemming.Action.GameOver));
     }
 
     public void BroadcastToFindNewTargetToAllLemmings(Vector2 targetPosition)

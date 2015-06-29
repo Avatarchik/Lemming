@@ -17,7 +17,7 @@ public class Lemming : MonoBehaviour
         MoveToCliff,
         BackToCenter,
         JumpToCliff,
-        Die
+        GameOver
     }
 
     public enum State
@@ -84,6 +84,9 @@ public class Lemming : MonoBehaviour
                 break;
             case Action.JumpToCliff:
                 currentState = new JumpToCliffState(this);
+                break;
+            case Action.GameOver:
+                currentState = new GameOverState(this);
                 break;
             default:
                 break;

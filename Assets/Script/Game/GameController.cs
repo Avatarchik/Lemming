@@ -119,6 +119,7 @@ public class GameController : MonoBehaviour
 
     private void GameOver()
     {
+        lemmingContainer.ChangeToGameOverState();
         currentGameState = GameState.GameOver;
         StopCoroutine("CheckingLemmingState");
         restartButton.SetActive(true);
