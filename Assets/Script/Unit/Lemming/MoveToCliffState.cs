@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class MoveToCliffState : IState
 {
-    private Vector2 targetPosition;
+    private HexagonMap.MapPosition targetPosition;
     private Lemming lemming;
 
-    public MoveToCliffState(Lemming lemming, Vector2 targetPosition)
+    public MoveToCliffState(Lemming lemming, HexagonMap.MapPosition targetPosition)
     {
         this.lemming = lemming;
         this.targetPosition = targetPosition;
@@ -37,12 +37,13 @@ public class MoveToCliffState : IState
 
     private bool IsValidTargetPosition()
     {
-        return GameController.Instance.GetAvailableCliffPosition().Contains(targetPosition);
+        return true;
     }
 
     private void MoveToTargetCliff()
     {
         float step = lemming.speed * Time.deltaTime;
-        lemming.transform.position = Vector3.MoveTowards(lemming.transform.position, targetPosition, step);
+        var position = GameController.Instance.map.GetCliffPosition()[(int)targetPosition];
+        lemming.transform.position = Vector3.MoveTowards(lemming.transform.position, position, step);
     }
 }

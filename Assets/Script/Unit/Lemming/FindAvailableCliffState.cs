@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +6,10 @@ using System.Linq;
 public class FindAvailableCliffState : IState
 {
 	bool isCalled = false;
-
+    private Lemming lemming;
 	public FindAvailableCliffState (Lemming lemming)
 	{
-		
+        this.lemming = lemming;
 	}
 
 	public void Update ()
@@ -19,12 +19,12 @@ public class FindAvailableCliffState : IState
 			return;
 
 		GameController.Instance.BroadcastToFindNewTargetToAllLemmings (GetRandomTargetPosition ());
+        lemming.ChangeAction(Lemming.Action.MoveToCliff);
 		isCalled = true;
 	}
 
-	private Vector2 GetRandomTargetPosition ()
+	private HexagonMap.MapPosition GetRandomTargetPosition ()
 	{
-		var availablePositionList = GameController.Instance.GetAvailableCliffPosition ();
-		return availablePositionList.Skip (Random.Range (0, availablePositionList.Count)).Take (1).FirstOrDefault ();
+		return (HexagonMap.MapPosition)Random.Range (0, GameController.Instance.map.GetCliffPosition().Count());
 	}
 }

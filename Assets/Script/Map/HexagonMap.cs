@@ -2,35 +2,44 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class HexagonMap : MonoBehaviour, Map
+public class HexagonMap : MonoBehaviour
 {
+    public enum MapPosition {
+        UpLeft = 0,
+        Up,
+        UpRight,
+        DownLeft,
+        Down,
+        DownRight
+    }
+    
     [SerializeField] GameObject [] touchTriggers;
-    private List<Vector2> cliffPosition;
+    private Vector2 [] cliffPosition;
     private Vector2 centerPosition;
     public HexagonMap()
     {
-        cliffPosition = new List<Vector2> {
+        cliffPosition = new Vector2 [] {
+            new Vector2 (-3.6f, 2.4f),
             new Vector2 (0, 4.3f),
             new Vector2 (3.6f, 2.4f),
-            new Vector2 (3.6f, -2.4f),
-            new Vector2 (0, -4.3f),
             new Vector2 (-3.6f, -2.4f),
-            new Vector2 (-3.6f, 2.4f)
+            new Vector2 (0, -4.3f),
+            new Vector2 (3.6f, -2.4f),
         };
         centerPosition = new Vector2(0, 0);
     }
 
-    Vector2 Map.GetCenterPosition()
+    public Vector2 GetCenterPosition()
     {
         return centerPosition;
     }
 
-    List<Vector2> Map.GetCliffPosition()
+    public Vector2[] GetCliffPosition()
     {
         return cliffPosition;
     }
     
-    void Map.TouchInputTrigger(GameObject trigger)
+    public void TouchInputTrigger(GameObject trigger)
     {
         var lemmings = trigger.GetComponent<TouchTriggerAction>().Lemmings;
         foreach (var lemming in lemmings)

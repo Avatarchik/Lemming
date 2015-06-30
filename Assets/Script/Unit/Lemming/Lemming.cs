@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Lemming : MonoBehaviour
 {
     public float speed;
     public float defaultSpeed;
     private IState currentState;
-    private Vector2? currentTargetPosition;
-    private Queue<Vector2> targetPositionQueue = new Queue<Vector2>();
+    private HexagonMap.MapPosition? currentTargetPositionIndex;
+    private Queue<HexagonMap.MapPosition> targetPositionQueue = new Queue<HexagonMap.MapPosition>();
 
     public enum Action
     {
@@ -17,7 +18,8 @@ public class Lemming : MonoBehaviour
         MoveToCliff,
         BackToCenter,
         JumpToCliff,
-        GameOver
+        GameOver,
+        WaitForFindingCliff
     }
 
     public enum State
@@ -28,6 +30,7 @@ public class Lemming : MonoBehaviour
         FindAvailableCliff,
         BackToCenter,
         JumpToCliff,
+        WaitForFindingCliff,
         Die
     }
 
@@ -70,13 +73,13 @@ public class Lemming : MonoBehaviour
             case Action.MoveToCliff:
                 if (targetPositionQueue.Count == 0)
                 {
-                    currentTargetPosition = null;
+                    currentTargetPositionIndex = null;
                     currentState = new FindAvailableCliffState(this);
                 }
                 else
                 {
-                    currentTargetPosition = targetPositionQueue.Dequeue();
-                    currentState = new MoveToCliffState(this, currentTargetPosition.Value);
+                    currentTargetPositionIndex = targetPositionQueue.Dequeue();
+                    currentState = new MoveToCliffState(this, currentTargetPositionIndex.Value);
                 }
                 break;
             case Action.BackToCenter:
@@ -87,6 +90,56 @@ public class Lemming : MonoBehaviour
                 break;
             case Action.GameOver:
                 currentState = new GameOverState(this);
+                break;
+            case Action.WaitForFindingCliff:
+                currentState = new WaitForFindingCliffState(this);
+                break;
+            default:
+                break;
+        }
+
+        SwitchLemmingAnimation(action);
+    }
+    private void InitializeAnimationParam()
+    {
+        var animator = GetComponent<Animator>();
+        animator.SetBool("isCenter", false);
+        animator.SetBool("back", false);
+        animator.SetBool("run_up_left", false);
+        animator.SetBool("run_up", false);
+        animator.SetBool("run_up_right", false);
+        animator.SetBool("run_down_left", false);
+        animator.SetBool("run_down", false);
+        animator.SetBool("run_down_right", false);
+        animator.SetBool("gameOver", false);
+    }
+
+    private void SwitchLemmingAnimation(Action action)
+    {
+        InitializeAnimationParam();
+        var animator = GetComponent<Animator>();
+        switch (action)
+        {
+            case Action.Idle:
+                animator.SetBool("isCenter", true);
+                break;
+            case Action.MoveToCliff:
+                animator.SetBool("run_up_left", currentTargetPositionIndex.HasValue && currentTargetPositionIndex.Value == HexagonMap.MapPosition.UpLeft);
+                animator.SetBool("run_up", currentTargetPositionIndex.HasValue && currentTargetPositionIndex.Value == HexagonMap.MapPosition.Up);
+                animator.SetBool("run_up_right", currentTargetPositionIndex.HasValue && currentTargetPositionIndex.Value == HexagonMap.MapPosition.UpRight);
+                animator.SetBool("run_down_left", currentTargetPositionIndex.HasValue && currentTargetPositionIndex.Value == HexagonMap.MapPosition.DownLeft);
+                animator.SetBool("run_down", currentTargetPositionIndex.HasValue && currentTargetPositionIndex.Value == HexagonMap.MapPosition.Down);
+                animator.SetBool("run_down_right", currentTargetPositionIndex.HasValue && currentTargetPositionIndex.Value == HexagonMap.MapPosition.DownRight);
+                break;
+            case Action.BackToCenter:
+                animator.SetBool("back", true);
+                break;
+            case Action.JumpToCliff:
+                break;
+            case Action.GameOver:
+                animator.SetBool("gameOver", true);
+                break;
+            case Action.WaitForFindingCliff:
                 break;
             default:
                 break;
@@ -107,6 +160,8 @@ public class Lemming : MonoBehaviour
             return State.JumpToCliff;
         else if (currentState is DieState)
             return State.Die;
+        else if (currentState is WaitForFindingCliffState)
+            return State.WaitForFindingCliff;
         else
             return State.None;
     }
@@ -117,12 +172,12 @@ public class Lemming : MonoBehaviour
             ChangeAction(Action.JumpToCliff);
     }
 
-    public void EnqueueTargetPosition(Vector2 targetPosition)
+    public void EnqueueTargetPositionIndex(HexagonMap.MapPosition targetPosition)
     {
         targetPositionQueue.Enqueue(targetPosition);
     }
 
-    public void ResetTargetPositionQueue()
+    public void ResetTargetPositionIndexQueue()
     {
         targetPositionQueue.Clear();
     }

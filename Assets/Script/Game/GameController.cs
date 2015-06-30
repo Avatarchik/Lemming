@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     private GameTimer timer;
     [SerializeField]
     private GameObject mapObject;
-    private Map map;
+    public HexagonMap map;
     private GameState currentGameState;
     private LemmingContainer lemmingContainer;
 
@@ -140,7 +140,10 @@ public class GameController : MonoBehaviour
                 switch (lemming.GetCurrentState())
                 {
                     case Lemming.State.Idle:
-                        lemming.ChangeAction(Lemming.Action.MoveToCliff);
+                        if(!lemmingContainer.IsAnyLemmingFindingCliff())
+                            lemming.ChangeAction(Lemming.Action.MoveToCliff);
+                        else
+                            lemming.ChangeAction(Lemming.Action.WaitForFindingCliff);
                         break;
                     case Lemming.State.MoveToCliff:
                         break;
@@ -152,6 +155,8 @@ public class GameController : MonoBehaviour
                         GameOver();
                         break;
                     case Lemming.State.Die:
+                        break;
+                    case Lemming.State.WaitForFindingCliff:
                         break;
                     default:
                         break;
@@ -166,7 +171,7 @@ public class GameController : MonoBehaviour
     {
         lemmingContainer.ResetLemmingPosition();
         lemmingContainer.ResetLemmingState();
-        lemmingContainer.ResetTargetPositionQueue();
+        lemmingContainer.ResetTargetPositionIndexQueue();
         lemmingContainer.ResetLemmingSpeed();
         StartGame();
     }
@@ -205,7 +210,7 @@ public class GameController : MonoBehaviour
 
     private void InitializeMap()
     {
-        map = mapObject.GetComponent<Map>();
+        map = mapObject.GetComponent<HexagonMap>();
     }
 
     private void InitializeLemmings()
@@ -215,18 +220,7 @@ public class GameController : MonoBehaviour
         lemmingContainer.ResetLemmingState();
     }
 
-    public List<Vector2> GetAvailableCliffPosition()
-    {
-        // FIXME: It'll be implemented.
-        return map.GetCliffPosition();
-    }
-
-    public List<Vector2> GetCliffPosition()
-    {
-        return map.GetCliffPosition();
-    }
-
-    public void BroadcastToFindNewTargetToAllLemmings(Vector2 targetPosition)
+    public void BroadcastToFindNewTargetToAllLemmings(HexagonMap.MapPosition targetPosition)
     {
         lemmingContainer.BroadcastToFindNewTargetToAllLemmings(targetPosition);
     }
