@@ -131,12 +131,11 @@ public class GameController : MonoBehaviour
 
     private IEnumerator CheckingLemmingState()
     {
-        var lemmings = lemmingContainer.LemmingObjects;
+        var lemmings = lemmingContainer.LemmingObjects.Select(go => go.GetComponent<Lemming>());
         while (currentGameState == GameState.Start)
         {
-            for (var i = 0; i < lemmings.Length; i++)
+            foreach (var lemming in lemmings)
             {
-                var lemming = lemmings[i].GetComponent<Lemming>();
                 switch (lemming.GetCurrentState())
                 {
                     case Lemming.State.Idle:
