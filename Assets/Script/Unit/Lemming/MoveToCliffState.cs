@@ -11,10 +11,10 @@ public class MoveToCliffState : IState
     {
         this.lemming = lemming;
         this.targetPosition = targetPosition;
-        SetRandomSpeed(ref lemming);
+        SetRandomSpeed(lemming);
     }
 
-    private void SetRandomSpeed(ref Lemming lemming)
+    private void SetRandomSpeed(Lemming lemming)
     {
         const float RANDOM_PERCENTAGE_LIMIT = 20;
         var maximumSpeed = lemming.defaultSpeed * (1 + RANDOM_PERCENTAGE_LIMIT / 100);
