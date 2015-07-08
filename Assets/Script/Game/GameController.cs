@@ -158,7 +158,7 @@ public class GameController : MonoBehaviour
                     case Lemming.State.WaitForFindingCliff:
                         break;
                     default:
-                        Debug.Assert(false, "Not reach here");
+                        Debug.Assert(false, "Not reach here " + lemming.GetCurrentState().ToString());
                         break;
                 }
             }
