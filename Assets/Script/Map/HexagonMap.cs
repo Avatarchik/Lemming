@@ -42,7 +42,6 @@ public class HexagonMap : MonoBehaviour
     public void TouchInputTrigger(GameObject trigger)
     {
         var lemmings = trigger.GetComponent<TouchTriggerAction>().Lemmings;
-        foreach (var lemming in lemmings)
-            lemming.ChangeAction(Lemming.Action.BackToCenter);
+        lemmings.ForEach(lemming => lemming.ChangeAction(Lemming.Action.BackToCenter));
     }
 }
