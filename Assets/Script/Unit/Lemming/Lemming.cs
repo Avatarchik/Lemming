@@ -160,10 +160,15 @@ public class Lemming : MonoBehaviour
             return State.JumpToCliff;
         else if (currentState is DieState)
             return State.Die;
+        else if (currentState is GameOverState)
+            return State.Die;
         else if (currentState is WaitForFindingCliffState)
             return State.WaitForFindingCliff;
         else
+        {
+            Debug.LogWarning("Not Reach here " + currentState.GetType().FullName);
             return State.None;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
