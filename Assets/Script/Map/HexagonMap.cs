@@ -34,11 +34,16 @@ public class HexagonMap : MonoBehaviour
         return centerPosition;
     }
 
-    public Vector2[] GetCliffPosition()
+    public Vector2 GetCliffPosition(MapPosition position)
     {
-        return cliffPosition;
+        return cliffPosition[(int)position];
     }
     
+    public MapPosition GetRandomMapPosition()
+    {
+        return (MapPosition)Random.Range (0, cliffPosition.Length);
+    }
+
     public void TouchInputTrigger(GameObject trigger)
     {
         var lemmings = trigger.GetComponent<TouchTriggerAction>().Lemmings;

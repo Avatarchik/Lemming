@@ -43,7 +43,7 @@ public class MoveToCliffState : IState
     private void MoveToTargetCliff()
     {
         float step = lemming.speed * Time.deltaTime;
-        var position = GameController.Instance.map.GetCliffPosition()[(int)targetPosition];
+        var position = GameController.Instance.map.GetCliffPosition(targetPosition);
         lemming.transform.position = Vector3.MoveTowards(lemming.transform.position, position, step);
     }
 }
