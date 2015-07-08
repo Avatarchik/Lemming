@@ -8,17 +8,6 @@ public class GameTimer : MonoBehaviour
     private Text timeText;
     private float currentTime = 0;
     private bool timerStarted = false;
-    public float CurrentTime
-    {
-        get
-        {
-            return currentTime;
-        }
-        set
-        {
-            currentTime = value;
-        }
-    }
     
     void FixedUpdate() {
         if (timerStarted) {
