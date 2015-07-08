@@ -17,8 +17,6 @@ public class GameController : MonoBehaviour
     private GameObject optionPanel;
     [SerializeField]
     private GameTimer timer;
-    [SerializeField]
-    private GameObject mapObject;
     public HexagonMap map;
     private GameState currentGameState;
     private LemmingContainer lemmingContainer;
@@ -204,13 +202,7 @@ public class GameController : MonoBehaviour
 
     private void Initialize()
     {
-        InitializeMap();
         InitializeLemmings();
-    }
-
-    private void InitializeMap()
-    {
-        map = mapObject.GetComponent<HexagonMap>();
     }
 
     private void InitializeLemmings()
