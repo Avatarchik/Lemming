@@ -40,7 +40,7 @@ public class LemmingContainer
 
     public bool IsAnyLemmingFindingCliff()
     {
-        return lemmingObjects.Any(lemmingObject => lemmingObject.GetComponent<Lemming>().GetCurrentState() == Lemming.State.FindAvailableCliff);
+        return Lemmings.Any(lemming => lemming.GetCurrentState() == Lemming.State.FindAvailableCliff);
     }
 
     public GameObject[] LemmingObjects
@@ -48,6 +48,14 @@ public class LemmingContainer
         get
         {
             return lemmingObjects;
+        }
+    }
+
+    private List<Lemming> Lemmings
+    {
+        get
+        {
+            return lemmingObjects.Select(go => go.GetComponent<Lemming>()).ToList();
         }
     }
 
@@ -59,18 +67,17 @@ public class LemmingContainer
 
     public void ResetLemmingState()
     {
-        lemmingObjects.ToList().ForEach(lemmingObject => lemmingObject.GetComponent<Lemming>().ChangeAction(Lemming.Action.Idle));
+        Lemmings.ForEach(lemming => lemming.ChangeAction(Lemming.Action.Idle));
     }
     
     public void ChangeToGameOverState()
     {
-        lemmingObjects.ToList().ForEach(lemmging => lemmging.GetComponent<Lemming>().ChangeAction(Lemming.Action.GameOver));
+        Lemmings.ForEach(lemming=> lemming.ChangeAction(Lemming.Action.GameOver));
     }
 
     public void BroadcastToFindNewTargetToAllLemmings(HexagonMap.MapPosition targetPositionIndex)
     {
-        lemmingObjects.ToList().ForEach(lemmingObject => {
-            var lemming = lemmingObject.GetComponent<Lemming>();
+        Lemmings.ForEach(lemming => {
             lemming.EnqueueTargetPositionIndex(targetPositionIndex);
             if (lemming.GetCurrentState() == Lemming.State.WaitForFindingCliff)
                 lemming.ChangeAction(Lemming.Action.MoveToCliff);
@@ -79,16 +86,16 @@ public class LemmingContainer
 
     public void ResetTargetPositionIndexQueue()
     {
-        lemmingObjects.ToList().ForEach(lemmingObject => lemmingObject.GetComponent<Lemming>().ResetTargetPositionIndexQueue());
+        Lemmings.ForEach(lemming => lemming.ResetTargetPositionIndexQueue());
     }
 
     public void IncreaseLemmingSpeed(float deltaSpeed)
     {
-        lemmingObjects.ToList().ForEach(lemmingObject => lemmingObject.GetComponent<Lemming>().IncreaseSpeed(deltaSpeed));
+        Lemmings.ForEach(lemming => lemming.IncreaseSpeed(deltaSpeed));
     }
     
     public void ResetLemmingSpeed()
     {
-        lemmingObjects.ToList().ForEach(lemmingObject => lemmingObject.GetComponent<Lemming>().ResetSpeed());
+        Lemmings.ForEach(lemming => lemming.ResetSpeed());
     }
 }

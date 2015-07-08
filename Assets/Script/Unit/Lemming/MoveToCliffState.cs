@@ -11,10 +11,10 @@ public class MoveToCliffState : IState
     {
         this.lemming = lemming;
         this.targetPosition = targetPosition;
-        SetRandomSpeed(ref lemming);
+        SetRandomSpeed(lemming);
     }
 
-    private void SetRandomSpeed(ref Lemming lemming)
+    private void SetRandomSpeed(Lemming lemming)
     {
         const float RANDOM_PERCENTAGE_LIMIT = 20;
         var maximumSpeed = lemming.defaultSpeed * (1 + RANDOM_PERCENTAGE_LIMIT / 100);
@@ -43,7 +43,7 @@ public class MoveToCliffState : IState
     private void MoveToTargetCliff()
     {
         float step = lemming.speed * Time.deltaTime;
-        var position = GameController.Instance.map.GetCliffPosition()[(int)targetPosition];
+        var position = GameController.Instance.map.GetCliffPosition(targetPosition);
         lemming.transform.position = Vector3.MoveTowards(lemming.transform.position, position, step);
     }
 }

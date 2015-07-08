@@ -12,6 +12,8 @@ public class TouchTriggerAction : MonoBehaviour
 
         if (lemming != null)
             lemmings.Remove(lemming);
+        else
+            Debug.LogWarning("Something which is not lemming triggers TouchTrigger. " + collider.gameObject.name);
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -20,6 +22,8 @@ public class TouchTriggerAction : MonoBehaviour
 
         if (lemming != null)
             lemmings.Add(lemming);
+        else
+            Debug.LogWarning("Something which is not lemming exits from TouchTrigger. " + collider.gameObject.name);
     }
 
     public List<Lemming> Lemmings

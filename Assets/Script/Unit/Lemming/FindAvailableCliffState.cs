@@ -25,6 +25,6 @@ public class FindAvailableCliffState : IState
 
 	private HexagonMap.MapPosition GetRandomTargetPosition ()
 	{
-		return (HexagonMap.MapPosition)Random.Range (0, GameController.Instance.map.GetCliffPosition().Count());
+		return GameController.Instance.map.GetRandomMapPosition();
 	}
 }
