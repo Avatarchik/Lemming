@@ -557,7 +557,7 @@ void iosFeedRequest(int requestId,
   // Native dialogs do not yet support To: fields, so fall back if we have one.
   shouldDisplayNative = shouldDisplayNative && !(toId && toId[0] != 0);
   if(shouldDisplayNative) {
-    FBShareDialogParams *dialogParams = [[[FBShareDialogParams alloc] init] autorelease];
+    FBShareDialogParams *dialogParams = [[FBShareDialogParams alloc] init];
     
     NSString *strLink = [NSString stringWithUTF8String:link];
     NSURL *linkUrl = [NSURL URLWithString:strLink];
