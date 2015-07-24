@@ -2,30 +2,29 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[System.Serializable]
+public class CliffPosition
+{
+   public GameObject[] cliffPositions;
+}
+
 public class HexagonMap : MonoBehaviour
 {
     public enum MapPosition {
         UpLeft = 0,
         Up,
         UpRight,
-        DownLeft,
+        DownRight,
         Down,
-        DownRight
+        DownLeft,
     }
     
     [SerializeField] GameObject [] touchTriggers;
-    private Vector2 [] cliffPosition;
+    [SerializeField]
+    private CliffPosition[] cliffPositions;
     private Vector2 centerPosition;
     public HexagonMap()
     {
-        cliffPosition = new Vector2 [] {
-            new Vector2 (-3.6f, 2.4f),
-            new Vector2 (0, 4.3f),
-            new Vector2 (3.6f, 2.4f),
-            new Vector2 (-3.6f, -2.4f),
-            new Vector2 (0, -4.3f),
-            new Vector2 (3.6f, -2.4f),
-        };
         centerPosition = new Vector2(0, 0);
     }
 
@@ -36,12 +35,13 @@ public class HexagonMap : MonoBehaviour
 
     public Vector2 GetCliffPosition(MapPosition position)
     {
-        return cliffPosition[(int)position];
+        var cliff = cliffPositions[(int)position];
+        return cliff.cliffPositions[Random.Range(0, cliff.cliffPositions.Length)].transform.position;
     }
     
     public MapPosition GetRandomMapPosition()
     {
-        return (MapPosition)Random.Range (0, cliffPosition.Length);
+        return (MapPosition)Random.Range (0, cliffPositions.Length);
     }
 
     public void TouchInputTrigger(GameObject trigger)
