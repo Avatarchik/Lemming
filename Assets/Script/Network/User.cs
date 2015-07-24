@@ -9,8 +9,15 @@ public class User
 
     private string userID;
     private string userName;
+    private LoginType loginType;
 
     private Action loginSuccessCallback;
+
+    public enum LoginType
+    {
+        None,
+        Facebook,
+    }
 
     public void LoginWithFacebook(Action successCallback)
     {
@@ -26,6 +33,8 @@ public class User
         if (FB.IsLoggedIn)
         {
             Debug.Log(FB.UserId);
+            loginType = LoginType.Facebook;
+            userID = FB.UserId;
             if (loginSuccessCallback != null)
                 loginSuccessCallback();
         }
@@ -38,7 +47,7 @@ public class User
     public void StartWithoutLogin(Action successCallback)
     {
         loginSuccessCallback = successCallback;
-
+        loginType = LoginType.None;
         // TODO: Setting default user.
         if (loginSuccessCallback != null)
             loginSuccessCallback();
