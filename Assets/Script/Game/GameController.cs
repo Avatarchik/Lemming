@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private GameObject mainHud;
     [SerializeField]
-    private GameObject restartButton;
+    private GameObject gameOverPanel;
     [SerializeField]
     private GameObject readyCounter;
     [SerializeField]
@@ -62,6 +62,11 @@ public class GameController : MonoBehaviour
         timer.ResetTime();
         StartCoroutine(ShowReadyCounter(StartCounterCallback));
     }
+
+	private void HideMainHud()
+	{
+		mainHud.SetActive(false);
+	}
 
     [UnityEventListener]
     private void OpenOptionPanel()
@@ -180,7 +185,8 @@ public class GameController : MonoBehaviour
         currentGameState = GameState.GameOver;
         StopCoroutine("IncreaseGameLevel");
         StopCoroutine("CheckingLemmingState");
-        restartButton.SetActive(true);
+        gameOverPanel.SetActive(true);
+		HideMainHud ();
         timer.StopTimer();
     }
 

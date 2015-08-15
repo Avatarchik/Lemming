@@ -28,8 +28,9 @@ public class GameTimer : MonoBehaviour
         currentTime = 0;
         SetTimeText(currentTime);
     }
-    
-    private void SetTimeText(float time) {
-        timeText.text = String.Format("{0:F2}", time);
+
+    private void SetTimeText(float sec) {
+		TimeSpan time = TimeSpan.FromSeconds(sec);
+		timeText.text = string.Format("{0:D2}:{1:D2}:{2:D3}", time.Minutes, time.Seconds, time.Milliseconds);
     }
 }

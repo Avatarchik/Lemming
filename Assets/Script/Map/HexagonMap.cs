@@ -33,7 +33,7 @@ public class HexagonMap : MonoBehaviour
         return centerPosition;
     }
 
-    public Vector2 GetCliffPosition(MapPosition position)
+	public Vector2 GetRandomPositionInCliffPosition(MapPosition position)
     {
         var cliff = cliffPositions[(int)position];
         return cliff.cliffPositions[Random.Range(0, cliff.cliffPositions.Length)].transform.position;

@@ -6,9 +6,9 @@ using System;
 public class MenuController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject ingameUI;
+    private GameObject mainMenu;
     [SerializeField]
-    private GameObject menuUI;
+    private GameObject loginUI;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class MenuController : MonoBehaviour
 	private void LoginWithFacebook()
 	{
     	User.GetInstance.LoginWithFacebook(() => {
-            HideMenuAndShowInGame();
+            HideLoginAndShowMainMenu();
         });
 	}
     
@@ -32,13 +32,13 @@ public class MenuController : MonoBehaviour
     private void StartWithoutLogin()
     {
     	User.GetInstance.StartWithoutLogin(() => {
-            HideMenuAndShowInGame();
+            HideLoginAndShowMainMenu();
         });
     }
     
-    private void HideMenuAndShowInGame()
+    private void HideLoginAndShowMainMenu()
     {
-        menuUI.SetActive(false);
-        ingameUI.SetActive(true);
+        loginUI.SetActive(false);
+        mainMenu.SetActive(true);
     }
 }
