@@ -42,7 +42,7 @@ public class Lemming : MonoBehaviour
 
     void Update()
     {
-        if (currentState != null)
+        if (currentState != null && GameController.Instance.CurrentGameState != GameController.GameState.Pause)
             currentState.Update();
     }
 
