@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour
 	[SerializeField]
 	private GameTimer
 		timer;
+	[SerializeField]
+	private GameObject
+		mainMenu;
 	public HexagonMap map;
 	private GameState currentGameState;
 	private LemmingContainer lemmingContainer;
@@ -77,6 +80,14 @@ public class GameController : MonoBehaviour
 		ShowOptionPanel ();
 	}
 
+	void OnApplicationPause ()
+	{
+		if (currentGameState == GameState.Start) {
+			PauseGame ();
+			ShowOptionPanel ();
+		}
+	}
+
 	[UnityEventListener]
 	private void CloseOptionMenu ()
 	{
@@ -95,10 +106,6 @@ public class GameController : MonoBehaviour
 		StartCoroutine (ShowReadyCounter (() => {
 			timer.StartTimer ();
 			currentGameState = GameState.Start;
-
-			// FIXME: In puase state CheckingLemmingState couroutine is killed. I don't know why this occured.
-			StopCoroutine ("CheckingLemmingState");
-			StartCoroutine ("CheckingLemmingState");
 		}));
 	}
 
@@ -131,11 +138,10 @@ public class GameController : MonoBehaviour
 	{
 		currentGameState = GameState.Start;
 		timer.StartTimer ();
-		
+
 		const float fixedTickTime = 10f;
 		timer.RegisterTicker (fixedTickTime, IncreaseGameLevel);
-
-		StartCoroutine ("CheckingLemmingState");
+		lemmingContainer.ChangeLemmingStateOfAll (Lemming.Action.ReadyToRunInCenter);
 	}
 
 	private void ShowMainHud ()
@@ -143,62 +149,68 @@ public class GameController : MonoBehaviour
 		mainHud.SetActive (true);
 	}
 
-	private IEnumerator CheckingLemmingState ()
+	private void CheckingLemmingState ()
 	{
 		var lemmings = lemmingContainer.LemmingObjects.Select (go => go.GetComponent<Lemming> ());
-		while (currentGameState == GameState.Start) {
-			foreach (var lemming in lemmings) {
-				switch (lemming.GetCurrentState ()) {
-				case Lemming.State.Idle:
-					if (!lemmingContainer.IsAnyLemmingFindingCliff ())
-						lemming.ChangeAction (Lemming.Action.MoveToCliff);
-					else
-						lemming.ChangeAction (Lemming.Action.WaitForFindingCliff);
-					break;
-				case Lemming.State.MoveToCliff:
-					break;
-				case Lemming.State.FindAvailableCliff:
-					break;
-				case Lemming.State.BackToCenter:
-					break;
-				case Lemming.State.JumpToCliff:
-					GameOver ();
-					break;
-				case Lemming.State.Die:
-					break;
-				case Lemming.State.WaitForFindingCliff:
-					break;
-				default:
-					Debug.Assert (false, "Not reach here " + lemming.GetCurrentState ().ToString ());
-					break;
-				}
+		foreach (var lemming in lemmings) {
+			switch (lemming.GetCurrentState ()) {
+			case Lemming.State.Idle:
+				break;
+			case Lemming.State.ReadyToRunInCenter:
+				if (!lemmingContainer.IsAnyLemmingFindingCliff ())
+					lemming.ChangeAction (Lemming.Action.MoveToCliff);
+				else
+					lemming.ChangeAction (Lemming.Action.WaitForFindingCliff);
+				break;
+			case Lemming.State.MoveToCliff:
+				break;
+			case Lemming.State.FindAvailableCliff:
+				break;
+			case Lemming.State.BackToCenter:
+				break;
+			case Lemming.State.JumpToCliff:
+				GameOver ();
+				break;
+			case Lemming.State.Die:
+				break;
+			case Lemming.State.WaitForFindingCliff:
+				break;
+			default:
+				Debug.Assert (false, "Not reach here " + lemming.GetCurrentState ().ToString ());
+				break;
 			}
-			yield return new WaitForFixedUpdate ();
 		}
 	}
 
 	[UnityEventListener]
 	private void RestartGame ()
 	{
+		ResetLemmings ();
+		StartGame ();
+	}
+
+	private void ResetLemmings()
+	{
 		lemmingContainer.ResetLemmingPosition ();
 		lemmingContainer.ResetLemmingState ();
 		lemmingContainer.ResetTargetPositionIndexQueue ();
 		lemmingContainer.ResetLemmingSpeed ();
-		StartGame ();
 	}
 
 	private void GameOver ()
 	{
 		lemmingContainer.ChangeToGameOverState ();
 		currentGameState = GameState.GameOver;
-		StopCoroutine ("CheckingLemmingState");
+		timer.StopTimer ();
+
+		gameOverPanel.GetComponent<GameOverPopup> ().Initialize (timer.GetCurrentTime ());
 		gameOverPanel.SetActive (true);
 		HideMainHud ();
-		timer.StopTimer ();
 	}
 
-	void Update ()
+	void FixedUpdate ()
 	{
+		CheckingLemmingState ();
 	}
 
 	private void IncreaseGameLevel ()
@@ -233,5 +245,20 @@ public class GameController : MonoBehaviour
 	public void TouchInputTrigger (GameObject trigger)
 	{
 		map.TouchInputTrigger (trigger);
+	}
+	
+	[UnityEventListener]
+	private void SetGameOver ()
+	{
+		GameOver ();
+	}
+
+	private void GoMainMenu ()
+	{
+		ResetLemmings ();
+
+		currentGameState = GameState.Ready;
+		mainMenu.SetActive (true);
+		mainHud.SetActive (false);
 	}
 }

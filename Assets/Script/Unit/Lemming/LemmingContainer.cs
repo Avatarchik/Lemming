@@ -75,6 +75,11 @@ public class LemmingContainer
         Lemmings.ForEach(lemming=> lemming.ChangeAction(Lemming.Action.GameOver));
     }
 
+	public void ChangeLemmingStateOfAll(Lemming.Action action)
+	{
+		Lemmings.ForEach (lemming => lemming.ChangeAction (action));
+	}
+
     public void BroadcastToFindNewTargetToAllLemmings(HexagonMap.MapPosition targetPositionIndex)
     {
         Lemmings.ForEach(lemming => {

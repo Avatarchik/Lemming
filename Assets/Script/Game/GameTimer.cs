@@ -28,6 +28,11 @@ public class GameTimer : MonoBehaviour
 	{
 		timerStarted = false;
 	}
+
+	public float GetCurrentTime()
+	{
+		return currentTime;
+	}
     
 	public void ResetTime ()
 	{

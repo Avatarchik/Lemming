@@ -7,4 +7,12 @@
 public class ErrorResult
 {
 	public string text;
+
+	public ErrorResult (string text)
+	{
+		this.text = text;
+	}
 }
+
+public class EmptyResult
+{}

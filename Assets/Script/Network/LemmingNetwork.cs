@@ -4,13 +4,14 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 public class LemmingNetwork
 {
 	private static LemmingNetwork network = null;
 	private string serverURL = "http://52.68.233.250:8000/LemmingServerApp/";
 
-	private void PostRequest<T> (string protocol, Dictionary<string, string> parameters, Action<LemmingNetworkResult<T>> successCallback, Action<ErrorResult> failCallback, bool sessionRequired = true)
+	private void PostRequest<T> (string protocol, Dictionary<string, string> parameters, Action<T> successCallback, Action<ErrorResult> failCallback, bool sessionRequired = true)
 	{
 		parameters.Add ("sessionRequired", sessionRequired.ToString ());
 		byte[] byteArray = Encoding.UTF8.GetBytes (ConstructQueryString (parameters));
@@ -21,12 +22,16 @@ public class LemmingNetwork
 				ex => Debug.LogException (ex));
 	}
 
-	private void ParseResponse<T> (string responseText, Action<LemmingNetworkResult<T>> successCallback, Action<ErrorResult> failCallback)
+	private static void ParseResponse<T> (string responseText, Action<T> successCallback, Action<ErrorResult> failCallback)
 	{
-		if (true) {
-
+		LemmingNetworkResult<T> lemmingNetworkResult = JsonConvert.DeserializeObject<LemmingNetworkResult<T>>(responseText);
+		if (lemmingNetworkResult.status == "ok") {
+			successCallback(lemmingNetworkResult.result);
+		} else if (lemmingNetworkResult.status == "fail") {
+			var errorResult = new ErrorResult (lemmingNetworkResult.result as string);
+			failCallback (errorResult);
 		} else {
-			failCallback(new ErrorResult());
+			Debug.LogError("Invalid network response");
 		}
 	}
 
@@ -35,6 +40,11 @@ public class LemmingNetwork
 		List<string> items = new List<string> ();
 		parameters.Keys.ToList ().ForEach (key => items.Add (string.Concat (key, "=", WWW.EscapeURL (parameters [key]))));
 		return string.Join ("&", items.ToArray ());
+	}
+
+	public void Login(string facebookID, Action<EmptyResult> successCallback, Action<ErrorResult> failCallback)
+	{
+
 	}
 
 	public static LemmingNetwork GetInstance {

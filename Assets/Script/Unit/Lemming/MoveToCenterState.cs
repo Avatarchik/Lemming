@@ -10,7 +10,6 @@ public class BackToCenterState : IState
 	{
 		this.lemming = lemming;
 		centerPosition = GameController.Instance.GetCenterPosition();
-		lemming.GetComponent<Animator>().SetBool("back", true);
 	}
 
 	private bool IsReached ()
@@ -41,6 +40,6 @@ public class BackToCenterState : IState
 	private void InitializeLemmingState ()
 	{
 		lemming.transform.position = centerPosition;
-		lemming.ChangeAction (Lemming.Action.Idle);
+		lemming.ChangeAction (Lemming.Action.ReadyToRunInCenter);
 	}
 }
