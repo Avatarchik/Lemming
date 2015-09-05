@@ -11,27 +11,35 @@ public class LemmingNetwork
 	private static LemmingNetwork network = null;
 	private string serverURL = "http://52.68.233.250:8000/LemmingServerApp/";
 
-	private void PostRequest<T> (string protocol, Dictionary<string, string> parameters, Action<T> successCallback, Action<ErrorResult> failCallback, bool sessionRequired = true)
+	private void PostRequest<T> (string protocol, Dictionary<string, string> parameters, Action<LemmingNetworkResult<T>> successCallback, Action<ErrorResult> failCallback, bool sessionRequired = true)
 	{
 		parameters.Add ("sessionRequired", sessionRequired.ToString ());
 		byte[] byteArray = Encoding.UTF8.GetBytes (ConstructQueryString (parameters));
 
 		ObservableWWW.PostWWW (serverURL + protocol, byteArray)
 			.Subscribe (
-				x => ParseResponse(x.text, successCallback, failCallback),
+				x => ParseResponse (x.text, successCallback, failCallback),
 				ex => Debug.LogException (ex));
 	}
 
-	private static void ParseResponse<T> (string responseText, Action<T> successCallback, Action<ErrorResult> failCallback)
+	private static void ParseResponse<T> (string responseText, Action<LemmingNetworkResult<T>> successCallback, Action<ErrorResult> failCallback)
 	{
-		LemmingNetworkResult<T> lemmingNetworkResult = JsonConvert.DeserializeObject<LemmingNetworkResult<T>>(responseText);
+		LemmingNetworkResult<T> lemmingNetworkResult = null;
+		Debug.Log (responseText);
+		try {
+			lemmingNetworkResult = JsonConvert.DeserializeObject<LemmingNetworkResult<T>> (responseText);
+		} catch (Exception e) {
+			Debug.LogError("response parsing error...");
+			Debug.LogError(e.StackTrace);
+		}
+
 		if (lemmingNetworkResult.status == "ok") {
-			successCallback(lemmingNetworkResult.result);
+			successCallback (lemmingNetworkResult);
 		} else if (lemmingNetworkResult.status == "fail") {
-			var errorResult = new ErrorResult (lemmingNetworkResult.result as string);
+			var errorResult = new ErrorResult (lemmingNetworkResult.errorResult as string);
 			failCallback (errorResult);
 		} else {
-			Debug.LogError("Invalid network response");
+			Debug.LogError ("Invalid network response");
 		}
 	}
 
@@ -42,9 +50,21 @@ public class LemmingNetwork
 		return string.Join ("&", items.ToArray ());
 	}
 
-	public void Login(string facebookID, Action<EmptyResult> successCallback, Action<ErrorResult> failCallback)
+	public void Login (string facebookID, Action<LemmingNetworkResult<EmptyResult>> successCallback, Action<ErrorResult> failCallback)
 	{
+		var parameters = new Dictionary<string, string> ();
+		parameters.Add ("facebookID", facebookID);
 
+		PostRequest<EmptyResult> ("account/login", parameters, successCallback, failCallback, sessionRequired: false);
+	}
+	
+	public void MakeUser (string facebookID, string name, Action<LemmingNetworkResult<EmptyResult>> successCallback, Action<ErrorResult> failCallback)
+	{
+		var parameters = new Dictionary<string, string> ();
+		parameters.Add ("facebookID", facebookID);
+		parameters.Add ("name", name);
+
+		PostRequest<EmptyResult> ("account/makeUser", parameters, successCallback, failCallback, sessionRequired: false);
 	}
 
 	public static LemmingNetwork GetInstance {

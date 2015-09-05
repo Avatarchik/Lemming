@@ -1,7 +1,11 @@
-﻿public class LemmingNetworkResult<T>
+﻿using System.Collections.Generic;
+
+public class LemmingNetworkResult<T>
 {
+	public T GetFirstReulst() { return result[0]; }
 	public string status;
-	public T result;
+	public List<T> result;
+	public string errorResult;
 }
 
 public class ErrorResult
