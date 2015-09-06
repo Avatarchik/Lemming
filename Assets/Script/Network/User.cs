@@ -2,19 +2,40 @@
 using System;
 using System.Collections;
 using Facebook;
-using Newtonsoft.Json;
 
 public class User
 {
 	public static User user;
 	private string userID;
-	private string userName;
+	private string nickName;
 	private LoginType loginType;
 	private Action loginSuccessCallback;
+	private float record;
+
+	public string UserID
+	{
+		get { return userID; }
+	}
+
+	public LoginType GetLoginType
+	{
+		get { return loginType; }
+	}
+	
+	public string NickName
+	{
+		get { return nickName; }
+	}
+
+	public float Record
+	{
+		get { return record; }
+		set { record = value; }
+	}
 
 	public enum LoginType
 	{
-		None,
+		Guest,
 		Facebook,
 	}
 
@@ -28,12 +49,7 @@ public class User
 					Debug.Log (FB.UserId);
 					loginType = LoginType.Facebook;
 					userID = FB.UserId;
-					FB.API ("/me?fields=first_name", Facebook.HttpMethod.GET, (result) => {
-						IDictionary dict = Facebook.MiniJSON.Json.Deserialize (result.Text) as IDictionary;
-						userName = dict ["first_name"].ToString ();
-						Debug.Log ("your name is: " + userName);
-						LoginToGameServer();
-					});
+					LoginToGameServer();
 				} else {
 					Debug.Log ("User cancelled login");
 				}
@@ -43,7 +59,10 @@ public class User
 
 	private void LoginToGameServer ()
 	{
-		LemmingNetwork.GetInstance.Login (userID, (e) => {
+		LemmingNetwork.GetInstance.Login (userID, (response) => {
+			this.nickName = response.GetFirstReulst().nickName;
+			this.record = response.GetFirstReulst().record;
+
 			Debug.Log("Loing success");
 			if (loginSuccessCallback != null)
 				loginSuccessCallback ();
@@ -51,36 +70,36 @@ public class User
 			Debug.LogError(error.text);
 			if (error.text == "invalidUser")
 			{
-				RegisterUser(() => {
-					LemmingNetwork.GetInstance.Login (userID, (e) => {
-						Debug.Log("Loing success");
-						if (loginSuccessCallback != null)
-							loginSuccessCallback ();
-					}, (erorr) => {
-						Debug.LogError(error.text);
-					});
-				});
+				ShowMakeUserPopup();
 			}
 		});
 	}
 
-	private void RegisterUser(Action callback)
+	private void ShowMakeUserPopup()
 	{
-		LemmingNetwork.GetInstance.MakeUser (userID, userName, (e) => {
-			callback();
-		}, (error) => {
-			Debug.LogError(error.text);
+		// FIXME : Find to better solution.
+		var menuController = GameObject.Find ("MenuController").GetComponent<MenuController> ();
+		menuController.ShowSignUpPanel (() => {
+			LemmingNetwork.GetInstance.Login (userID, (response) => {
+				this.nickName = response.GetFirstReulst().nickName;
+				this.record = response.GetFirstReulst().record;
+
+				Debug.Log("Loing success");
+				if (loginSuccessCallback != null)
+					loginSuccessCallback ();
+			}, (error) => {
+				Debug.LogError(error.text);
+			});
 		});
 	}
 
 	public void StartWithoutLogin (Action successCallback)
 	{
 		loginSuccessCallback = successCallback;
-		loginType = LoginType.None;
+		loginType = LoginType.Guest;
+		userID = SystemInfo.deviceUniqueIdentifier;
 
-		// TODO: Setting default user.
-		if (loginSuccessCallback != null)
-			loginSuccessCallback ();
+		LoginToGameServer ();
 	}
 
 	public static User GetInstance {

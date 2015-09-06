@@ -18,5 +18,11 @@ public class ErrorResult
 	}
 }
 
+public class LoginResult
+{
+	public string nickName;
+	public float record;
+}
+
 public class EmptyResult
 {}

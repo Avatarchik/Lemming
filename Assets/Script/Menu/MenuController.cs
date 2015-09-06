@@ -9,6 +9,8 @@ public class MenuController : MonoBehaviour
     private GameObject mainMenu;
     [SerializeField]
     private GameObject loginUI;
+	[SerializeField]
+	private GameObject signUpPanel;
 
     void Start()
     {
@@ -41,4 +43,9 @@ public class MenuController : MonoBehaviour
         loginUI.SetActive(false);
         mainMenu.SetActive(true);
     }
+
+	public void ShowSignUpPanel(Action callback)
+	{
+		signUpPanel.GetComponent<SignUpPopup> ().OpenPopup (callback);
+	}
 }
