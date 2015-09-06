@@ -6,9 +6,9 @@ public class WaveMovement : MonoBehaviour
 {
     private float initialLocalYPositionOfRectTransformPosition = 0f;
     [SerializeField]
-    private float maximumTopModificationValue = 30f;
+    private float maximumTopModificationValue = 10f;
     [SerializeField]
-    private float minimumTopModificationValue = -30f;
+    private float minimumTopModificationValue = -10f;
     [SerializeField]
     private float waveSpeed = 0.5f;
     private float targetLocalYPositionOfRectTransformPosition = 0f;
