@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 public class LemmingNetwork
 {
 	private static LemmingNetwork network = null;
-	private Dictionary<string, string> header = new Dictionary<string, string>();
-	//private string serverURL = "http://52.68.233.250:8000/LemmingServerApp/";
-	private string serverURL = "http://localhost:8000/LemmingServerApp/";
+	private Dictionary<string, string> header = new Dictionary<string, string> ();
+	private string serverURL = "http://52.68.233.250:8000/LemmingServerApp/";
+	//private string serverURL = "http://localhost:8000/LemmingServerApp/";
 
 	private void PostRequest<T> (string protocol, Dictionary<string, string> parameters, Action<LemmingNetworkResult<T>> successCallback, Action<ErrorResult> failCallback, bool sessionRequired = true)
 	{
@@ -19,26 +19,33 @@ public class LemmingNetwork
 		byte[] byteArray = Encoding.UTF8.GetBytes (ConstructQueryString (parameters));
 
 		ObservableWWW.PostWWW (serverURL + protocol, byteArray, header)
+			.CatchIgnore ((WWWErrorException ex) => {
+				Debug.Log (ex.RawErrorMessage);
+				if (ex.HasResponse) {
+					Debug.Log (ex.StatusCode);
+				}
+				foreach (var item in ex.ResponseHeaders) {
+					Debug.Log (item.Key + ":" + item.Value);
+				}
+			})
 			.Subscribe (
 			(x) => {
-				if (x.responseHeaders.ContainsKey("SET-COOKIE"))
-				{
-					string[] v = x.responseHeaders["SET-COOKIE"].Split(';');
-					foreach (string s in v)
-					{
-						if (string.IsNullOrEmpty(s)) continue;
-						if (s.Contains("sessionid"))
-						{
-							header.Add("Cookie", s);
-							break;
-						}
+			if (x.responseHeaders.ContainsKey ("SET-COOKIE")) {
+				string[] v = x.responseHeaders ["SET-COOKIE"].Split (';');
+				foreach (string s in v) {
+					if (string.IsNullOrEmpty (s))
+						continue;
+					if (s.Contains ("sessionid")) {
+						header.Add ("Cookie", s);
+						break;
 					}
 				}
-				ParseResponse (x.text, successCallback, failCallback);
-			},
+			}
+			ParseResponse (x.text, successCallback, failCallback);
+		},
 			(ex) => {
-				Debug.LogException (ex);
-			});
+			Debug.LogException (ex);
+		});
 	}
 
 	private static void ParseResponse<T> (string responseText, Action<LemmingNetworkResult<T>> successCallback, Action<ErrorResult> failCallback)
@@ -48,8 +55,8 @@ public class LemmingNetwork
 		try {
 			lemmingNetworkResult = JsonConvert.DeserializeObject<LemmingNetworkResult<T>> (responseText);
 		} catch (Exception e) {
-			Debug.LogError("response parsing error...");
-			Debug.LogError(e.StackTrace);
+			Debug.LogError ("response parsing error...");
+			Debug.LogError (e.StackTrace);
 		}
 
 		if (lemmingNetworkResult.status == "ok") {
@@ -95,7 +102,7 @@ public class LemmingNetwork
 	public void SetRecord (float record, Action<LemmingNetworkResult<EmptyResult>> successCallback, Action<ErrorResult> failCallback)
 	{
 		var parameters = new Dictionary<string, string> ();
-		parameters.Add ("record", record.ToString());
+		parameters.Add ("record", record.ToString ());
 
 		PostRequest<EmptyResult> ("account/setRecord", parameters, successCallback, failCallback, sessionRequired: true);
 	}
