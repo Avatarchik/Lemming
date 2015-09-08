@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: fb96d3755da8d47f684dd98031f7105b
+timeCreated: 1441740571
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: item_octopus_leg_left_0
+    21300002: item_octopus_leg_left_1
+    21300004: item_octopus_leg_left_2
+    21300006: item_octopus_leg_left_3
+    21300008: item_octopus_leg_left_4
+    21300010: item_octopus_leg_left_5
+    21300012: item_octopus_leg_left_6
+    21300014: item_octopus_leg_left_7
+    21300016: item_octopus_leg_left_8
+    21300018: item_octopus_leg_left_9
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: item_octopus_leg_left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 77
+        width: 63
+        height: 201
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_leg_left_1
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 53
+        width: 118
+        height: 227
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_leg_left_2
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 9
+        width: 170
+        height: 271
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 5, w: 0}
+    - name: item_octopus_leg_left_3
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 23
+        width: 164
+        height: 253
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_leg_left_4
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 72
+        width: 164
+        height: 154
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_leg_left_5
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 87
+        width: 113
+        height: 183
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_leg_left_6
+      rect:
+        serializedVersion: 2
+        x: 1020
+        y: 13
+        width: 63
+        height: 211
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_leg_left_7
+      rect:
+        serializedVersion: 2
+        x: 1190
+        y: 14
+        width: 89
+        height: 229
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_leg_left_8
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 19
+        width: 132
+        height: 245
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_leg_left_9
+      rect:
+        serializedVersion: 2
+        x: 1530
+        y: 4
+        width: 149
+        height: 270
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

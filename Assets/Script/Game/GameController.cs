@@ -10,6 +10,9 @@ public class GameController : MonoBehaviour
 {
 	[SerializeField]
 	private GameObject
+		octopusLegs;
+	[SerializeField]
+	private GameObject
 		quitPopup;
 	[SerializeField]
 	private GameObject
@@ -149,9 +152,11 @@ public class GameController : MonoBehaviour
 		timer.StartTimer ();
 
 		const float increaseGameLevelTickTime = 10f;
-		const float spawnAnimalFriendTickTime = 5f;
+		const float spawnAnimalFriendTickTime = 15f;
+		const float showOctopusTickTIme = 30f;
 		timer.RegisterTicker (new TickAction(increaseGameLevelTickTime, IncreaseGameLevel));
 		timer.RegisterTicker (new TickAction (spawnAnimalFriendTickTime, SpawnRandomAnimalFriend));
+		timer.RegisterTicker (new TickAction (showOctopusTickTIme, ShowOctopus));
 		lemmingContainer.ChangeLemmingStateOfAll (Lemming.Action.ReadyToRunInCenter);
 	}
 
@@ -198,6 +203,7 @@ public class GameController : MonoBehaviour
 	{
 		ResetLemmings ();
 		ResetItemBoxes ();
+		HideOctopus ();
 		StartGame ();
 	}
 
@@ -216,7 +222,6 @@ public class GameController : MonoBehaviour
 
 	private void GameOver ()
 	{
-		lemmingContainer.ChangeToGameOverState ();
 		currentGameState = GameState.GameOver;
 		timer.StopTimer ();
 
@@ -240,66 +245,43 @@ public class GameController : MonoBehaviour
 		CheckMouseClickEvent ();
 	}
 
-	private Vector2? firstTouchPosition;
-	private float touchsensitive = 30f;
 	private void CheckTouchEvent()
 	{
 		if (Input.touchCount == 1)
 		{
 			var touch = Input.GetTouch(0);
 
-			if (touch.phase == TouchPhase.Began)
-			{
-				firstTouchPosition = touch.position;
-			}
-
 			if (touch.phase == TouchPhase.Ended)
 			{
-				if (firstTouchPosition.HasValue && Vector3.Magnitude(firstTouchPosition.Value - touch.position) < touchsensitive)
-				{
-					OnClick(touch.position);
-				}
-
-				firstTouchPosition = null;
+				CheckAnimalFriend(touch.position);
 			}
 		}
-	}
-
-	private void OnClick(Vector3 clickPosition)
-	{
-		CheckAnimalFriend (clickPosition);
 	}
 
 	private void CheckAnimalFriend(Vector3 clickPosition)
 	{
 		Vector3 pos = Camera.main.ScreenToWorldPoint(clickPosition);
-		RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-		
-		if (hit.collider != null) {
-			var animalFriend = hit.collider.gameObject.GetComponent<AnimalFriend>();
+		Collider2D[] hitColliders = Physics2D.OverlapPointAll(pos);
 
-			if (animalFriend != null)
-				animalFriend.OnClicked();
-		}
+		hitColliders.ToList ().ForEach (hitCollider => {
+			if (hitCollider != null) {
+				var animalFriend = hitCollider.gameObject.GetComponent<AnimalFriend> ();
+
+				if (animalFriend != null)
+					animalFriend.OnClicked ();
+
+				if (hitCollider.gameObject == spawnedOctopus)
+					KillOctopus();
+			}
+		});
 	}
 
-	private Vector3? firstMousePressedPosition; 
 	[Conditional("UNITY_EDITOR")]
 	private void CheckMouseClickEvent()
 	{
-		if (Input.GetMouseButtonDown (0))
-		{
-			firstMousePressedPosition = Input.mousePosition;
-		}
-
 		if (Input.GetMouseButtonUp (0))
 		{
-			if (firstMousePressedPosition.HasValue && Vector3.Magnitude(firstMousePressedPosition.Value - Input.mousePosition) < touchsensitive)
-			{
-				OnClick(Input.mousePosition);
-			}
-
-			firstMousePressedPosition = null;
+			CheckAnimalFriend(Input.mousePosition);
 		}
 	}
 
@@ -347,6 +329,7 @@ public class GameController : MonoBehaviour
 	{
 		ResetLemmings ();
 		ItemController.Instance.ResetItemBoxes ();
+		HideOctopus ();
 
 		currentGameState = GameState.Ready;
 		mainMenu.SetActive (true);
@@ -382,5 +365,66 @@ public class GameController : MonoBehaviour
 	private void QuitLemming()
 	{
 		Application.Quit ();
+	}
+
+	private GameObject spawnedOctopus = null;
+	private string octopusPrefabPath = "Unit/AnimalFriends/Octopus/OctopusPrefab";
+	private TimeoutAction octopusWaitingTimeoutAction;
+	private bool isOctopusAlived = false;
+
+	private void ShowOctopus()
+	{
+		isOctopusAlived = true;
+		SpawnOctopus ();
+		ShowOctopusLegs ();
+		octopusWaitingTimeoutAction = new TimeoutAction (5f, () => {
+			ShowOctopusInc();
+			HideOctopus();
+		});
+
+		timer.RegisterTimeout (octopusWaitingTimeoutAction);
+	}
+
+	private string octopusIncPrefabPath = "Unit/AnimalFriends/Octopus/OctopusIncPrefab";
+	private void ShowOctopusInc()
+	{
+		var prefab = (GameObject)Resources.Load(octopusIncPrefabPath, typeof(GameObject));
+		var content = GameObject.Instantiate(prefab) as GameObject;
+		content.transform.SetParent (mainHud.transform);
+
+		content.GetComponent<RectTransform> ().localPosition = Vector3.zero;
+		content.GetComponent<RectTransform> ().localScale = Vector3.one;
+	}
+
+	private void SpawnOctopus()
+	{
+		var octopusPrefab = (GameObject)Resources.Load(octopusPrefabPath, typeof(GameObject));
+		var octopus = GameObject.Instantiate (octopusPrefab, map.octopusSpawnPoint.position, Quaternion.identity) as GameObject;
+		octopus.transform.SetParent (map.gameObject.transform);
+		spawnedOctopus = octopus;
+	}
+
+	private void ShowOctopusLegs()
+	{
+		octopusLegs.SetActive (true);
+	}
+
+	private void HideOctopusLegs()
+	{
+		octopusLegs.SetActive (false);
+	}
+
+	private void HideOctopus()
+	{
+		GameObject.Destroy (spawnedOctopus);
+		HideOctopusLegs ();
+		isOctopusAlived = false;
+		spawnedOctopus = null;
+	}
+
+	private void KillOctopus()
+	{
+		timer.RemoveTimeout (octopusWaitingTimeoutAction);
+		HideOctopus ();
 	}
 }

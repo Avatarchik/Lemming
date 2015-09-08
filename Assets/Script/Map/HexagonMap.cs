@@ -23,6 +23,7 @@ public class HexagonMap : MonoBehaviour
 	[SerializeField] public Transform pelicanTargetPoint;
 	[SerializeField] public Transform orcaSpawnPoint;
 	[SerializeField] public Transform thunderSpawnPoint;
+	[SerializeField] public Transform octopusSpawnPoint;
 
     [SerializeField] private GameObject [] touchTriggers;
     [SerializeField]

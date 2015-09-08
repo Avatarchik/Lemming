@@ -1,0 +1,154 @@
+fileFormatVersion: 2
+guid: 058aac828065646f0a9c23c7695f8f41
+timeCreated: 1441745007
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 4_lemming_fall_upRight_0
+    21300002: 4_lemming_fall_upRight_1
+    21300004: 4_lemming_fall_upRight_2
+    21300006: 4_lemming_fall_upRight_3
+    21300008: 4_lemming_fall_upRight_4
+    21300010: 4_lemming_fall_upRight_5
+    21300012: 4_lemming_fall_upRight_6
+    21300014: 4_lemming_fall_upRight_7
+    21300016: 4_lemming_fall_upRight_8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: 4_lemming_fall_upRight_0
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 432
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: 4_lemming_fall_upRight_1
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 90
+        width: 336
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: 4_lemming_fall_upRight_2
+      rect:
+        serializedVersion: 2
+        x: 1854
+        y: 93
+        width: 335
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: 4_lemming_fall_upRight_3
+      rect:
+        serializedVersion: 2
+        x: 2303
+        y: 90
+        width: 337
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: 4_lemming_fall_upRight_4
+      rect:
+        serializedVersion: 2
+        x: 2754
+        y: 93
+        width: 335
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: 4_lemming_fall_upRight_5
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 87
+        width: 360
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: 4_lemming_fall_upRight_6
+      rect:
+        serializedVersion: 2
+        x: 465
+        y: 131
+        width: 399
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: 4_lemming_fall_upRight_7
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 131
+        width: 388
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: 4_lemming_fall_upRight_8
+      rect:
+        serializedVersion: 2
+        x: 1794
+        y: 10
+        width: 6
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

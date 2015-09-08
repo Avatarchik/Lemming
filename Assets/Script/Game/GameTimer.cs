@@ -101,6 +101,11 @@ public class GameTimer : MonoBehaviour
 		timeout.nextCallTime = timeout.timeout + currentTime;
 		timeoutActions.Add (timeout);
 	}
+
+	public void RemoveTimeout(TimeoutAction timeout)
+	{
+		timeoutActions.Remove (timeout);
+	}
 }
 
 public class TickAction

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using ConditionalAttribute = System.Diagnostics.ConditionalAttribute;
 using System.Collections.Generic;
+using System.Linq;
 
 public class LemmingInputController : MonoBehaviour
 {
@@ -37,10 +38,12 @@ public class LemmingInputController : MonoBehaviour
             return;
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(position);
-        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+		Collider2D[] hitColliders = Physics2D.OverlapPointAll(pos);
 
-        if (hit.collider != null && hit.collider.gameObject.name.Contains("TouchTrigger"))
-            GameController.Instance.TouchInputTrigger(hit.collider.gameObject);
+		hitColliders.ToList ().ForEach (hitCollider => {
+			if (hitCollider != null && hitCollider.gameObject.name.Contains ("TouchTrigger"))
+				GameController.Instance.TouchInputTrigger (hitCollider.gameObject);
+		});
     }
 
     [Conditional("UNITY_EDITOR")]

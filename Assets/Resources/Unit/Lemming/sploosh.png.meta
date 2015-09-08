@@ -1,0 +1,220 @@
+fileFormatVersion: 2
+guid: cbe22fa47512b4da49b3dbd9507a84b1
+timeCreated: 1441747496
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: sploosh_0
+    21300002: sploosh_1
+    21300004: sploosh_2
+    21300006: sploosh_3
+    21300008: sploosh_4
+    21300010: sploosh_5
+    21300012: sploosh_6
+    21300014: sploosh_7
+    21300016: sploosh_8
+    21300018: sploosh_9
+    21300020: sploosh_10
+    21300022: sploosh_11
+    21300024: sploosh_12
+    21300026: sploosh_13
+    21300028: sploosh_14
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: sploosh_0
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 31
+        width: 188
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_1
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 32
+        width: 276
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_2
+      rect:
+        serializedVersion: 2
+        x: 1238
+        y: 27
+        width: 297
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_3
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 29
+        width: 312
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_4
+      rect:
+        serializedVersion: 2
+        x: 2024
+        y: 27
+        width: 329
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_5
+      rect:
+        serializedVersion: 2
+        x: 2418
+        y: 27
+        width: 341
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_6
+      rect:
+        serializedVersion: 2
+        x: 2806
+        y: 25
+        width: 355
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_7
+      rect:
+        serializedVersion: 2
+        x: 3200
+        y: 27
+        width: 399
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_8
+      rect:
+        serializedVersion: 2
+        x: 3269
+        y: 111
+        width: 24
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_9
+      rect:
+        serializedVersion: 2
+        x: 3439
+        y: 75
+        width: 35
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_10
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 94
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_11
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 96
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_12
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 61
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_13
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 34
+        width: 121
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: sploosh_14
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 59
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

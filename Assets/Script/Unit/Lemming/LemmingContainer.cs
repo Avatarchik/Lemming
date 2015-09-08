@@ -67,7 +67,8 @@ public class LemmingContainer
 
     public void ResetLemmingState()
     {
-        Lemmings.ForEach(lemming => {
+		Lemmings.ForEach(lemming => {
+			lemming.gameObject.SetActive(true);
 			lemming.ChangeAction(Lemming.Action.Idle);
 			lemming.ResetStunState();
 		});

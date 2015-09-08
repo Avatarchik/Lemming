@@ -9,6 +9,7 @@ public class Lemming : MonoBehaviour
 	public float defaultSpeed;
 	private IState currentState;
 	private HexagonMap.MapPosition? currentTargetPositionIndex;
+	public Vector2? randomPositionOfCurrentTargetPosition;
 	private bool isStunState = false;
 	private Queue<HexagonMap.MapPosition> targetPositionQueue = new Queue<HexagonMap.MapPosition> ();
 
@@ -124,6 +125,7 @@ public class Lemming : MonoBehaviour
 		animator.SetBool ("run_down", false);
 		animator.SetBool ("run_down_right", false);
 		animator.SetBool ("toIdle", false);
+		animator.SetBool ("gameOver", false);
 	}
 
 	private void SwitchLemmingAnimation (Action action)
@@ -149,9 +151,9 @@ public class Lemming : MonoBehaviour
 			animator.SetBool ("back", true);
 			break;
 		case Action.JumpToCliff:
+			animator.SetBool ("gameOver", true);
 			break;
 		case Action.GameOver:
-			animator.SetBool ("toIdle", true);
 			break;
 		case Action.WaitForFindingCliff:
 			break;

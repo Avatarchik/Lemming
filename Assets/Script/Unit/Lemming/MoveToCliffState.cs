@@ -11,6 +11,7 @@ public class MoveToCliffState : IState
     {
 		this.lemming = lemming;
 		this.targetPosition = GameController.Instance.map.GetRandomPositionInCliffPosition(targetPosition);
+		lemming.randomPositionOfCurrentTargetPosition = this.targetPosition;
         SetRandomSpeed(lemming);
     }
 

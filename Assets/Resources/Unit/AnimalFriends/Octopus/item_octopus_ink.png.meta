@@ -1,0 +1,396 @@
+fileFormatVersion: 2
+guid: e27d3d10ae338406ba6d6f96bfd33ad1
+timeCreated: 1441741236
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: item_octopus_ink4
+    21300002: item_octopus_ink_1
+    21300004: item_octopus_ink5
+    21300006: item_octopus_ink_3
+    21300008: item_octopus_ink6
+    21300010: item_octopus_ink_5
+    21300012: item_octopus_ink7
+    21300014: item_octopus_ink_7
+    21300016: item_octopus_ink8
+    21300018: item_octopus_ink_9
+    21300020: item_octopus_ink9
+    21300022: item_octopus_ink_11
+    21300024: item_octopus_ink10
+    21300026: item_octopus_ink_13
+    21300028: item_octopus_ink0
+    21300030: item_octopus_ink1
+    21300032: item_octopus_ink3
+    21300034: item_octopus_ink2
+    21300036: item_octopus_ink_18
+    21300038: item_octopus_ink_19
+    21300040: item_octopus_ink_20
+    21300042: item_octopus_ink_21
+    21300044: item_octopus_ink_22
+    21300046: item_octopus_ink_23
+    21300048: item_octopus_ink_24
+    21300050: item_octopus_ink_25
+    21300052: item_octopus_ink_26
+    21300054: item_octopus_ink_27
+    21300056: item_octopus_ink_28
+    21300058: item_octopus_ink_29
+    21300060: item_octopus_ink_30
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: item_octopus_ink4
+      rect:
+        serializedVersion: 2
+        x: 2895
+        y: 168
+        width: 576
+        height: 719
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_1
+      rect:
+        serializedVersion: 2
+        x: 3103
+        y: 856
+        width: 35
+        height: 62
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink5
+      rect:
+        serializedVersion: 2
+        x: 3614
+        y: 168
+        width: 708
+        height: 719
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_3
+      rect:
+        serializedVersion: 2
+        x: 3827
+        y: 856
+        width: 31
+        height: 62
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink6
+      rect:
+        serializedVersion: 2
+        x: 4333
+        y: 168
+        width: 708
+        height: 719
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_5
+      rect:
+        serializedVersion: 2
+        x: 4546
+        y: 856
+        width: 31
+        height: 62
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink7
+      rect:
+        serializedVersion: 2
+        x: 5056
+        y: 168
+        width: 708
+        height: 719
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_7
+      rect:
+        serializedVersion: 2
+        x: 5265
+        y: 856
+        width: 35
+        height: 62
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink8
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 168
+        width: 707
+        height: 719
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_9
+      rect:
+        serializedVersion: 2
+        x: 5984
+        y: 852
+        width: 35
+        height: 66
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink9
+      rect:
+        serializedVersion: 2
+        x: 6495
+        y: 168
+        width: 708
+        height: 715
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_11
+      rect:
+        serializedVersion: 2
+        x: 6704
+        y: 852
+        width: 35
+        height: 62
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink10
+      rect:
+        serializedVersion: 2
+        x: 7214
+        y: 164
+        width: 706
+        height: 719
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_13
+      rect:
+        serializedVersion: 2
+        x: 7423
+        y: 852
+        width: 35
+        height: 62
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink0
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 752
+        width: 82
+        height: 73
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink1
+      rect:
+        serializedVersion: 2
+        x: 969
+        y: 597
+        width: 193
+        height: 197
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink3
+      rect:
+        serializedVersion: 2
+        x: 2175
+        y: 172
+        width: 576
+        height: 618
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink2
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 172
+        width: 576
+        height: 522
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_18
+      rect:
+        serializedVersion: 2
+        x: 1858
+        y: 168
+        width: 27
+        height: 70
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_19
+      rect:
+        serializedVersion: 2
+        x: 2585
+        y: 137
+        width: 27
+        height: 74
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_20
+      rect:
+        serializedVersion: 2
+        x: 2891
+        y: 187
+        width: 58
+        height: 43
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_21
+      rect:
+        serializedVersion: 2
+        x: 3602
+        y: 172
+        width: 43
+        height: 35
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_22
+      rect:
+        serializedVersion: 2
+        x: 6178
+        y: 157
+        width: 19
+        height: 46
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_23
+      rect:
+        serializedVersion: 2
+        x: 3316
+        y: 110
+        width: 16
+        height: 70
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_24
+      rect:
+        serializedVersion: 2
+        x: 5366
+        y: 141
+        width: 19
+        height: 31
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_25
+      rect:
+        serializedVersion: 2
+        x: 6089
+        y: 102
+        width: 19
+        height: 47
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_26
+      rect:
+        serializedVersion: 2
+        x: 6893
+        y: 118
+        width: 19
+        height: 65
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_27
+      rect:
+        serializedVersion: 2
+        x: 4039
+        y: 79
+        width: 12
+        height: 54
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_28
+      rect:
+        serializedVersion: 2
+        x: 4759
+        y: 48
+        width: 15
+        height: 58
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_29
+      rect:
+        serializedVersion: 2
+        x: 5478
+        y: 2
+        width: 15
+        height: 85
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_octopus_ink_30
+      rect:
+        serializedVersion: 2
+        x: 6804
+        y: 37
+        width: 20
+        height: 54
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

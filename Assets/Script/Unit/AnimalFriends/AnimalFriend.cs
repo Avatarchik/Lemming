@@ -14,7 +14,10 @@ public abstract class AnimalFriend : MonoBehaviour {
 
 	public void OnClicked()
 	{
-		PresentObject.SetActive (false);
-		ItemController.Instance.AttainRandomItem ();
+		if (PresentObject.activeInHierarchy)
+		{
+			ItemController.Instance.AttainRandomItem ();
+			PresentObject.SetActive (false);
+		}
 	}
 }
