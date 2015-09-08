@@ -60,8 +60,8 @@ public class User
 	private void LoginToGameServer ()
 	{
 		LemmingNetwork.GetInstance.Login (userID, (response) => {
-			this.nickName = response.GetFirstReulst().nickName;
-			this.record = response.GetFirstReulst().record;
+			this.nickName = response.GetFirstResult().nickName;
+			this.record = response.GetFirstResult().record;
 
 			Debug.Log("Loing success");
 			if (loginSuccessCallback != null)
@@ -81,8 +81,8 @@ public class User
 		var menuController = GameObject.Find ("MenuController").GetComponent<MenuController> ();
 		menuController.ShowSignUpPanel (() => {
 			LemmingNetwork.GetInstance.Login (userID, (response) => {
-				this.nickName = response.GetFirstReulst().nickName;
-				this.record = response.GetFirstReulst().record;
+				this.nickName = response.GetFirstResult().nickName;
+				this.record = response.GetFirstResult().record;
 
 				Debug.Log("Loing success");
 				if (loginSuccessCallback != null)

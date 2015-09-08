@@ -107,6 +107,12 @@ public class LemmingNetwork
 		PostRequest<EmptyResult> ("account/setRecord", parameters, successCallback, failCallback, sessionRequired: true);
 	}
 
+	public void GetWorldRecords(Action<LemmingNetworkResult<GetWorldRecordsResult>> successCallback, Action<ErrorResult> failCallback)
+	{
+		var parameters = new Dictionary<string, string> ();
+		PostRequest<GetWorldRecordsResult> ("account/getWorldRecords", parameters, successCallback, failCallback, sessionRequired: false);
+	}
+
 	public static LemmingNetwork GetInstance {
 		get {
 			if (network == null)

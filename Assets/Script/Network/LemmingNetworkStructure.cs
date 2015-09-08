@@ -2,7 +2,7 @@
 
 public class LemmingNetworkResult<T>
 {
-	public T GetFirstReulst() { return result[0]; }
+	public T GetFirstResult() { return result[0]; }
 	public string status;
 	public List<T> result;
 	public string errorResult;
@@ -26,3 +26,16 @@ public class LoginResult
 
 public class EmptyResult
 {}
+
+public class UserRecord
+{
+	public int rank;
+	public string nickName;
+	public float record;
+	public string userID;
+}
+
+public class GetWorldRecordsResult
+{
+	public List<UserRecord> userRecords;
+}
