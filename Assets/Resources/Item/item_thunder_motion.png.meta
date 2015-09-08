@@ -1,0 +1,154 @@
+fileFormatVersion: 2
+guid: d5c22f2ff790640fb9fdd7f6d17ccba8
+timeCreated: 1441727187
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: item_thunder_motion_0
+    21300002: item_thunder_motion_1
+    21300004: item_thunder_motion_2
+    21300006: item_thunder_motion_3
+    21300008: item_thunder_motion_4
+    21300010: item_thunder_motion_5
+    21300012: item_thunder_motion_6
+    21300014: item_thunder_motion_7
+    21300016: item_thunder_motion_8
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: item_thunder_motion_0
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 522
+        width: 106
+        height: 178
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_thunder_motion_1
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 418
+        width: 22
+        height: 37
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_thunder_motion_2
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 323
+        width: 166
+        height: 377
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_thunder_motion_3
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 158
+        width: 140
+        height: 542
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_thunder_motion_4
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 7
+        width: 234
+        height: 693
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_thunder_motion_5
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 18
+        width: 221
+        height: 682
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_thunder_motion_6
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 6
+        width: 208
+        height: 694
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_thunder_motion_7
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 534
+        width: 176
+        height: 77
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: item_thunder_motion_8
+      rect:
+        serializedVersion: 2
+        x: 1517
+        y: 503
+        width: 15
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

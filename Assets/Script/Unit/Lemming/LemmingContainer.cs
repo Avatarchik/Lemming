@@ -67,7 +67,10 @@ public class LemmingContainer
 
     public void ResetLemmingState()
     {
-        Lemmings.ForEach(lemming => lemming.ChangeAction(Lemming.Action.Idle));
+        Lemmings.ForEach(lemming => {
+			lemming.ChangeAction(Lemming.Action.Idle);
+			lemming.ResetStunState();
+		});
     }
     
     public void ChangeToGameOverState()
@@ -103,4 +106,14 @@ public class LemmingContainer
     {
         Lemmings.ForEach(lemming => lemming.ResetSpeed());
     }
+
+	public void StunAllLemming()
+	{
+		Lemmings.ForEach (lemming => lemming.SetStunState ());
+	}
+
+	public void ResetStunAllLemming()
+	{
+		Lemmings.ForEach (lemming => lemming.ResetStunState ());
+	}
 }

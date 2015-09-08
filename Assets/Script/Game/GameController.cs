@@ -4,9 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using ConditionalAttribute = System.Diagnostics.ConditionalAttribute;
 
 public class GameController : MonoBehaviour
 {
+	[SerializeField]
+	private GameObject
+		quitPopup;
 	[SerializeField]
 	private GameObject
 		mainHud;
@@ -41,6 +45,12 @@ public class GameController : MonoBehaviour
 		Start,
 		GameOver,
 		Pause
+	}
+
+	public enum AnimalFriendType
+	{
+		Pelican = 0,
+		Orca
 	}
 
 	public static GameController Instance {
@@ -83,8 +93,7 @@ public class GameController : MonoBehaviour
 	void OnApplicationPause ()
 	{
 		if (currentGameState == GameState.Start) {
-			PauseGame ();
-			ShowOptionPanel ();
+			OpenOptionPanel();
 		}
 	}
 
@@ -139,8 +148,10 @@ public class GameController : MonoBehaviour
 		currentGameState = GameState.Start;
 		timer.StartTimer ();
 
-		const float fixedTickTime = 10f;
-		timer.RegisterTicker (fixedTickTime, IncreaseGameLevel);
+		const float increaseGameLevelTickTime = 10f;
+		const float spawnAnimalFriendTickTime = 5f;
+		timer.RegisterTicker (new TickAction(increaseGameLevelTickTime, IncreaseGameLevel));
+		timer.RegisterTicker (new TickAction (spawnAnimalFriendTickTime, SpawnRandomAnimalFriend));
 		lemmingContainer.ChangeLemmingStateOfAll (Lemming.Action.ReadyToRunInCenter);
 	}
 
@@ -186,7 +197,13 @@ public class GameController : MonoBehaviour
 	private void RestartGame ()
 	{
 		ResetLemmings ();
+		ResetItemBoxes ();
 		StartGame ();
+	}
+
+	private void ResetItemBoxes()
+	{
+		ItemController.Instance.ResetItemBoxes ();
 	}
 
 	private void ResetLemmings()
@@ -210,7 +227,80 @@ public class GameController : MonoBehaviour
 
 	void FixedUpdate ()
 	{
+		// back button
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			if (currentGameState == GameState.Start)
+				OpenOptionPanel();
+			else
+				quitPopup.SetActive(true);
+		}
+
 		CheckingLemmingState ();
+		CheckTouchEvent ();
+		CheckMouseClickEvent ();
+	}
+
+	private Vector2? firstTouchPosition;
+	private float touchsensitive = 30f;
+	private void CheckTouchEvent()
+	{
+		if (Input.touchCount == 1)
+		{
+			var touch = Input.GetTouch(0);
+
+			if (touch.phase == TouchPhase.Began)
+			{
+				firstTouchPosition = touch.position;
+			}
+
+			if (touch.phase == TouchPhase.Ended)
+			{
+				if (firstTouchPosition.HasValue && Vector3.Magnitude(firstTouchPosition.Value - touch.position) < touchsensitive)
+				{
+					OnClick(touch.position);
+				}
+
+				firstTouchPosition = null;
+			}
+		}
+	}
+
+	private void OnClick(Vector3 clickPosition)
+	{
+		CheckAnimalFriend (clickPosition);
+	}
+
+	private void CheckAnimalFriend(Vector3 clickPosition)
+	{
+		Vector3 pos = Camera.main.ScreenToWorldPoint(clickPosition);
+		RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+		
+		if (hit.collider != null) {
+			var animalFriend = hit.collider.gameObject.GetComponent<AnimalFriend>();
+
+			if (animalFriend != null)
+				animalFriend.OnClicked();
+		}
+	}
+
+	private Vector3? firstMousePressedPosition; 
+	[Conditional("UNITY_EDITOR")]
+	private void CheckMouseClickEvent()
+	{
+		if (Input.GetMouseButtonDown (0))
+		{
+			firstMousePressedPosition = Input.mousePosition;
+		}
+
+		if (Input.GetMouseButtonUp (0))
+		{
+			if (firstMousePressedPosition.HasValue && Vector3.Magnitude(firstMousePressedPosition.Value - Input.mousePosition) < touchsensitive)
+			{
+				OnClick(Input.mousePosition);
+			}
+
+			firstMousePressedPosition = null;
+		}
 	}
 
 	private void IncreaseGameLevel ()
@@ -256,9 +346,41 @@ public class GameController : MonoBehaviour
 	private void GoMainMenu ()
 	{
 		ResetLemmings ();
+		ItemController.Instance.ResetItemBoxes ();
 
 		currentGameState = GameState.Ready;
 		mainMenu.SetActive (true);
 		mainHud.SetActive (false);
+	}
+
+	private void SpawnRandomAnimalFriend()
+	{
+		Debug.Log ("Spawn animal friend");
+		var countOfAnimalFriendType = Enum.GetNames (typeof(AnimalFriendType)).Length;
+		var randomAnimalFriend = (AnimalFriendType)UnityEngine.Random.Range (0, countOfAnimalFriendType);
+
+		switch(randomAnimalFriend)
+		{
+			case AnimalFriendType.Orca:
+				Orca.SpawnAnimal ();
+				break;
+			case AnimalFriendType.Pelican:
+				Pelican.SpawnAnimal();
+				break;
+		}
+	}
+
+	public void StunAllLemmingForSecond(float second)
+	{
+		lemmingContainer.StunAllLemming ();
+		timer.RegisterTimeout(new TimeoutAction(second, () => {
+			lemmingContainer.ResetStunAllLemming();
+		}));
+	}
+
+	[UnityEventListener]
+	private void QuitLemming()
+	{
+		Application.Quit ();
 	}
 }

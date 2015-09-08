@@ -10,8 +10,9 @@ public class WaveMovement : MonoBehaviour
     [SerializeField]
     private float minimumTopModificationValue = -10f;
     [SerializeField]
-    private float waveSpeed = 0.5f;
+    private float waveSpeed = 0.2f;
     private float targetLocalYPositionOfRectTransformPosition = 0f;
+
     void Awake()
     {
         initialLocalYPositionOfRectTransformPosition = gameObject.GetComponent<RectTransform>().localPosition.y;

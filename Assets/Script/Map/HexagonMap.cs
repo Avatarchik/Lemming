@@ -18,8 +18,13 @@ public class HexagonMap : MonoBehaviour
         Down,
         DownLeft,
     }
-    
-    [SerializeField] GameObject [] touchTriggers;
+
+	[SerializeField] public Transform pelicanSpawnPoint;
+	[SerializeField] public Transform pelicanTargetPoint;
+	[SerializeField] public Transform orcaSpawnPoint;
+	[SerializeField] public Transform thunderSpawnPoint;
+
+    [SerializeField] private GameObject [] touchTriggers;
     [SerializeField]
     private CliffPosition[] cliffPositions;
     private Vector2 centerPosition;

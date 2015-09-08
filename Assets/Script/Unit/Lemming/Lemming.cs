@@ -9,7 +9,18 @@ public class Lemming : MonoBehaviour
 	public float defaultSpeed;
 	private IState currentState;
 	private HexagonMap.MapPosition? currentTargetPositionIndex;
+	private bool isStunState = false;
 	private Queue<HexagonMap.MapPosition> targetPositionQueue = new Queue<HexagonMap.MapPosition> ();
+
+	public void SetStunState()
+	{
+		isStunState = true;
+	}
+
+	public void ResetStunState()
+	{
+		isStunState = false;
+	}
 
 	public enum Action
 	{
@@ -44,7 +55,7 @@ public class Lemming : MonoBehaviour
 
 	void Update ()
 	{
-		if (currentState != null && GameController.Instance.CurrentGameState != GameController.GameState.Pause)
+		if (currentState != null && GameController.Instance.CurrentGameState != GameController.GameState.Pause && !isStunState)
 			currentState.Update ();
 	}
 
@@ -105,7 +116,6 @@ public class Lemming : MonoBehaviour
 	{
 		var animator = GetComponent<Animator> ();
 		animator.SetBool ("readyToRunInCenter", false);
-		animator.SetBool ("isCenter", false);
 		animator.SetBool ("back", false);
 		animator.SetBool ("run_up_left", false);
 		animator.SetBool ("run_up", false);
