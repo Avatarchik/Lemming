@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 public class LemmingNetworkResult<T>
 {
@@ -33,6 +35,8 @@ public class UserRecord
 	public string nickName;
 	public float record;
 	public string userID;
+	[JsonConverter(typeof(StringEnumConverter))]
+	public User.LoginType userType;
 }
 
 public class GetWorldRecordsResult

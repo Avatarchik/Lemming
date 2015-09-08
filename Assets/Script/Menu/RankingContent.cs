@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using UniRx;
 
 public class RankingContent : MonoBehaviour
 {
@@ -36,7 +37,12 @@ public class RankingContent : MonoBehaviour
 
 	private void SetUserImage()
 	{
-		// TODO
+		if (userRecord.userType == User.LoginType.Facebook) {
+			var pictureURL = string.Format ("http://graph.facebook.com/{0}/picture?type=square", userRecord.userID);
+			ObservableWWW.GetWWW (pictureURL).Subscribe (www => {
+				photo.overrideSprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f));
+			});
+		}
 	}
 
 	private void InitializeUI()
