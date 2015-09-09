@@ -204,6 +204,7 @@ public class GameController : MonoBehaviour
 		ResetLemmings ();
 		ResetItemBoxes ();
 		HideOctopus ();
+		map.ResetTrigger ();
 		StartGame ();
 	}
 
@@ -251,7 +252,7 @@ public class GameController : MonoBehaviour
 		{
 			var touch = Input.GetTouch(0);
 
-			if (touch.phase == TouchPhase.Ended)
+			if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Began)
 			{
 				CheckAnimalFriend(touch.position);
 			}
@@ -279,7 +280,7 @@ public class GameController : MonoBehaviour
 	[Conditional("UNITY_EDITOR")]
 	private void CheckMouseClickEvent()
 	{
-		if (Input.GetMouseButtonUp (0))
+		if (Input.GetMouseButtonUp (0) || Input.GetMouseButtonDown (0))
 		{
 			CheckAnimalFriend(Input.mousePosition);
 		}
@@ -330,6 +331,7 @@ public class GameController : MonoBehaviour
 		ResetLemmings ();
 		ItemController.Instance.ResetItemBoxes ();
 		HideOctopus ();
+		map.ResetTrigger ();
 
 		currentGameState = GameState.Ready;
 		mainMenu.SetActive (true);
@@ -385,6 +387,7 @@ public class GameController : MonoBehaviour
 		timer.RegisterTimeout (octopusWaitingTimeoutAction);
 	}
 
+	private GameObject spawnedOctopusInc = null;
 	private string octopusIncPrefabPath = "Unit/AnimalFriends/Octopus/OctopusIncPrefab";
 	private void ShowOctopusInc()
 	{
@@ -394,6 +397,8 @@ public class GameController : MonoBehaviour
 
 		content.GetComponent<RectTransform> ().localPosition = Vector3.zero;
 		content.GetComponent<RectTransform> ().localScale = Vector3.one;
+
+		spawnedOctopusInc = content;
 	}
 
 	private void SpawnOctopus()
@@ -417,9 +422,11 @@ public class GameController : MonoBehaviour
 	private void HideOctopus()
 	{
 		GameObject.Destroy (spawnedOctopus);
+		GameObject.Destroy (spawnedOctopusInc);
 		HideOctopusLegs ();
 		isOctopusAlived = false;
 		spawnedOctopus = null;
+		spawnedOctopusInc = null;
 	}
 
 	private void KillOctopus()

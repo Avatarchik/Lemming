@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class CliffPosition
@@ -55,4 +56,9 @@ public class HexagonMap : MonoBehaviour
         var lemmings = trigger.GetComponent<TouchTriggerAction>().Lemmings;
         lemmings.ForEach(lemming => lemming.ChangeAction(Lemming.Action.BackToCenter));
     }
+
+	public void ResetTrigger()
+	{
+		touchTriggers.ToList ().ForEach (touchTrigger => touchTrigger.GetComponent<TouchTriggerAction>().ResetLemmingContainAction());
+	}
 }

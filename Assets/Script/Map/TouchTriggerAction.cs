@@ -33,4 +33,9 @@ public class TouchTriggerAction : MonoBehaviour
             return lemmings;
         }
     }
+
+	public void ResetLemmingContainAction()
+	{
+		lemmings.Clear ();
+	}
 }

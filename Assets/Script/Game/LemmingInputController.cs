@@ -38,11 +38,11 @@ public class LemmingInputController : MonoBehaviour
             return;
 
         Vector3 pos = Camera.main.ScreenToWorldPoint(position);
-		Collider2D[] hitColliders = Physics2D.OverlapPointAll(pos);
+		RaycastHit2D[] hits = Physics2D.RaycastAll (pos, Vector2.zero);
 
-		hitColliders.ToList ().ForEach (hitCollider => {
-			if (hitCollider != null && hitCollider.gameObject.name.Contains ("TouchTrigger"))
-				GameController.Instance.TouchInputTrigger (hitCollider.gameObject);
+		hits.ToList ().ForEach (hit => {
+			if (hit.collider != null && hit.collider.gameObject.name.Contains ("TouchTrigger"))
+				GameController.Instance.TouchInputTrigger (hit.collider.gameObject);
 		});
     }
 
